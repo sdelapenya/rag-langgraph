@@ -1,0 +1,12 @@
+# Entorno propio, separado del de ~/lab/rag/ a propósito: ese sirve el servicio
+# del puerto 8006 y no se toca. Aquí solo se añade LangGraph encima de las
+# mismas versiones de las dependencias del RAG.
+langgraph==1.2.10
+langchain-core==1.5.3
+
+# idénticas a ~/lab/rag/requirements.txt (menos flask/gunicorn, que aquí no hacen falta)
+pdfplumber==0.11.10
+groq==1.4.0
+google-genai==2.16.0
+fastembed==0.8.0
+numpy==2.5.1

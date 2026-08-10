@@ -1,0 +1,37 @@
+[Unit]
+Description=Demo RAG — preguntas sobre normativa laboral (Flask + Gunicorn)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sergio
+Group=sergio
+WorkingDirectory=/home/sergio/lab/rag
+# fichero con SOLO las claves de API de este servicio: nada de credenciales de
+# otros servicios, que este proceso no tiene por qué ver.
+# GEMINI_API_KEY es opcional: es el respaldo cuando Groq agota la cuota diaria.
+EnvironmentFile=/home/sergio/secrets/rag-demo.env
+Environment=RAG_MODEL=e5
+Environment=RAG_MODE=semantic
+Environment=RAG_LLM=openai/gpt-oss-20b
+# k=3 y 2.500 caracteres por artículo = mitad de tokens por pregunta que k=5,
+# con el mismo acierto medido. No subirlos sin volver a pasar evaluate.py.
+Environment=RAG_TOP_K=3
+Environment=RAG_MAX_CHARS=2500
+Environment=RAG_LIMITE_IP=10
+# -w 1: el índice vive en memoria del proceso (~1 GB con e5); varios workers
+# multiplicarían la RAM sin ganar nada en una demo de bajo tráfico.
+ExecStart=/home/sergio/lab/rag/.venv/bin/gunicorn -w 1 -t 120 -b 127.0.0.1:8006 app:app
+Restart=on-failure
+RestartSec=5
+
+# el proceso solo necesita leer su carpeta y escribir la caché de modelos
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/home/sergio/.cache
+
+[Install]
+WantedBy=multi-user.target

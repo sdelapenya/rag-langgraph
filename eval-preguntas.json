@@ -1,0 +1,150 @@
+{
+  "descripcion": "Conjunto de evaluación del RAG. Cada pregunta indica qué artículo(s) DEBERÍA recuperar el buscador y qué dato tiene que aparecer en la respuesta. Las preguntas están escritas como las haría una persona normal, no copiando el vocabulario de la ley: ahí es donde se ve si la búsqueda entiende el significado o solo casa palabras.",
+  "preguntas": [
+    {
+      "id": "horas-extra",
+      "pregunta": "¿Cuántas horas extra puedo hacer como máximo al año?",
+      "secciones": ["et:Artículo 35"],
+      "respuesta_contiene": ["ochenta", "80"]
+    },
+    {
+      "id": "jornada-maxima",
+      "pregunta": "¿Cuál es la jornada máxima de trabajo a la semana?",
+      "secciones": ["et:Artículo 34"],
+      "respuesta_contiene": ["cuarenta", "40"]
+    },
+    {
+      "id": "vacaciones",
+      "pregunta": "¿Cuántos días de vacaciones me corresponden al año como mínimo?",
+      "secciones": ["et:Artículo 38"],
+      "respuesta_contiene": ["treinta", "30"]
+    },
+    {
+      "id": "descanso-entre-jornadas",
+      "pregunta": "Si acabo un turno muy tarde, ¿cuánto tiempo tiene que pasar hasta que empiece el siguiente?",
+      "secciones": ["et:Artículo 34"],
+      "respuesta_contiene": ["doce", "12"]
+    },
+    {
+      "id": "descanso-semanal",
+      "pregunta": "¿Cuánto descanso seguido me toca cada semana?",
+      "secciones": ["et:Artículo 37"],
+      "respuesta_contiene": ["día y medio", "dia y medio"]
+    },
+    {
+      "id": "despido-improcedente",
+      "pregunta": "Si me echan y el despido se declara improcedente, ¿cuánto me tienen que pagar por año trabajado?",
+      "secciones": ["et:Artículo 56"],
+      "respuesta_contiene": ["treinta y tres", "33"]
+    },
+    {
+      "id": "despido-objetivo",
+      "pregunta": "¿Qué indemnización corresponde en un despido por causas objetivas?",
+      "secciones": ["et:Artículo 53"],
+      "respuesta_contiene": ["veinte", "20"]
+    },
+    {
+      "id": "edad-minima",
+      "pregunta": "¿A partir de qué edad se puede empezar a trabajar?",
+      "secciones": ["et:Artículo 6"],
+      "respuesta_contiene": ["dieciséis", "16"]
+    },
+    {
+      "id": "lactancia",
+      "pregunta": "Acabo de ser madre, ¿qué permiso tengo para dar el pecho y hasta cuándo?",
+      "secciones": ["et:Artículo 37"],
+      "respuesta_contiene": ["nueve meses", "9 meses", "una hora"]
+    },
+    {
+      "id": "trabajo-nocturno",
+      "pregunta": "¿Qué horas cuentan como trabajo nocturno?",
+      "secciones": ["et:Artículo 36"],
+      "respuesta_contiene": ["diez de la noche", "22", "seis de la mañana"]
+    },
+    {
+      "id": "periodo-prueba",
+      "pregunta": "¿Cuánto puede durar el periodo de prueba en un contrato?",
+      "secciones": ["et:Artículo 14"],
+      "respuesta_contiene": ["seis meses", "6 meses", "dos meses", "2 meses"]
+    },
+    {
+      "id": "traslado",
+      "pregunta": "¿Puede la empresa mandarme a trabajar a otra ciudad y obligarme a mudarme?",
+      "secciones": ["et:Artículo 40"],
+      "respuesta_contiene": ["traslado", "razones económicas", "cambio de residencia"]
+    },
+    {
+      "id": "bajar-sueldo",
+      "pregunta": "¿Puede mi empresa bajarme el sueldo o cambiarme el horario sin mi permiso?",
+      "secciones": ["et:Artículo 41"],
+      "respuesta_contiene": ["modificaci", "sustancial"]
+    },
+    {
+      "id": "teletrabajo-gastos",
+      "pregunta": "Trabajo desde casa, ¿quién paga el ordenador y la luz?",
+      "secciones": ["teletrabajo:Artículo 11", "teletrabajo:Artículo 12"],
+      "respuesta_contiene": ["empresa", "sufragado", "compensad"]
+    },
+    {
+      "id": "teletrabajo-regular",
+      "pregunta": "¿Cuántos días desde casa hacen falta para que cuente legalmente como trabajo a distancia?",
+      "secciones": ["teletrabajo:Artículo 1"],
+      "respuesta_contiene": ["treinta por ciento", "30", "tres meses"]
+    },
+    {
+      "id": "teletrabajo-volver",
+      "pregunta": "Ya no quiero seguir teletrabajando, ¿puedo volver a la oficina?",
+      "secciones": ["teletrabajo:Artículo 5"],
+      "respuesta_contiene": ["reversible", "voluntari"]
+    },
+    {
+      "id": "teletrabajo-acuerdo",
+      "pregunta": "¿Hay que firmar algún papel antes de empezar a teletrabajar?",
+      "secciones": ["teletrabajo:Artículo 6", "teletrabajo:Artículo 7"],
+      "respuesta_contiene": ["por escrito", "acuerdo"]
+    },
+    {
+      "id": "teletrabajo-fichar",
+      "pregunta": "¿Tengo que fichar si trabajo desde casa?",
+      "secciones": ["teletrabajo:Artículo 14"],
+      "respuesta_contiene": ["registro horario", "inicio y finalización"]
+    },
+    {
+      "id": "teletrabajo-control",
+      "pregunta": "¿Puede la empresa vigilar lo que hago en el ordenador mientras teletrabajo?",
+      "secciones": ["teletrabajo:Artículo 22", "teletrabajo:Artículo 17", "teletrabajo:Artículo 20"],
+      "respuesta_contiene": ["vigilancia", "control", "dignidad"]
+    },
+    {
+      "id": "fuera-iva",
+      "pregunta": "¿Cuál es el tipo general del IVA en España?",
+      "secciones": [],
+      "abstenerse": true
+    },
+    {
+      "id": "fuera-smi-importe",
+      "pregunta": "¿De cuántos euros al mes es el salario mínimo interprofesional este año?",
+      "secciones": [],
+      "abstenerse": true
+    },
+    {
+      "id": "iva-acotado",
+      "pregunta": "¿Cuál es el tipo del IVA?",
+      "secciones": ["teletrabajo:Disposición adicional séptima"],
+      "respuesta_contiene": ["covid", "sanitario", "2020"],
+      "nota": "Caso real de la demo: la Ley 10/2021 sí fija un IVA del 0 %, pero solo para material COVID y hasta el 31/10/2020. El modelo respondía «el IVA es del 0 %» sin acotar. No se pide abstención: se pide que acote."
+    },
+    {
+      "id": "fuera-jubilacion",
+      "pregunta": "¿Cuántos años hay que cotizar para cobrar el 100% de la pensión de jubilación?",
+      "secciones": [],
+      "abstenerse": true
+    },
+    {
+      "id": "fuera-paro",
+      "pregunta": "¿Cómo se solicita la prestación por desempleo en el SEPE?",
+      "secciones": [],
+      "abstenerse": true
+    }
+  ]
+}

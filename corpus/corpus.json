@@ -1,0 +1,19 @@
+{
+  "descripcion": "Normativa laboral española publicada en el BOE (texto consolidado). Documentos públicos, verificables por cualquiera contra boe.es.",
+  "documentos": [
+    {
+      "archivo": "estatuto-trabajadores.pdf",
+      "doc_id": "et",
+      "titulo": "Estatuto de los Trabajadores",
+      "fuente": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430",
+      "referencia": "Real Decreto Legislativo 2/2015, de 23 de octubre"
+    },
+    {
+      "archivo": "ley-teletrabajo.pdf",
+      "doc_id": "teletrabajo",
+      "titulo": "Ley de Trabajo a Distancia",
+      "fuente": "https://www.boe.es/buscar/act.php?id=BOE-A-2021-11472",
+      "referencia": "Ley 10/2021, de 9 de julio, de trabajo a distancia"
+    }
+  ]
+}

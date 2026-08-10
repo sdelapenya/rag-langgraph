@@ -1,0 +1,39 @@
+Salida de `python3 calibrar_umbral.py` — 2026-08-09
+Índice e5 (intfloat/multilingual-e5-large), modo semantic, k=3, con reescritura cacheada.
+
+  EN el corpus (20 preguntas)
+    0.8280  descanso-entre-jornadas
+    0.8356  teletrabajo-volver
+    0.8391  teletrabajo-gastos
+    0.8397  bajar-sueldo
+    0.8417  lactancia
+    0.8463  descanso-semanal
+    0.8508  iva-acotado
+    0.8521  edad-minima
+    0.8521  teletrabajo-control
+    0.8555  jornada-maxima
+    0.8557  traslado
+    0.8572  teletrabajo-fichar
+    0.8581  teletrabajo-regular
+    0.8601  horas-extra
+    0.8622  vacaciones
+    0.8629  teletrabajo-acuerdo
+    0.8721  despido-improcedente
+    0.8885  despido-objetivo
+    0.8917  periodo-prueba
+    0.8946  trabajo-nocturno
+
+  FUERA del corpus (4 preguntas)
+    0.8328  fuera-paro
+    0.8353  fuera-iva
+    0.8361  fuera-jubilacion
+    0.8619  fuera-smi-importe
+
+  mínimo dentro  0.8280
+  máximo fuera   0.8619
+  -> se solapan: no hay umbral que separe. El filtro barato solo puede
+     cortar por debajo del mínimo de dentro, y ahí ya no ahorra nada.
+
+Conclusión: la similitud sola NO decide. Por eso el umbral del grafo se queda en
+0,80 — un suelo para preguntas ajenas al corpus (medido: "¿cuál es la capital de
+Mongolia?" da 0,72) — y quien decide de verdad es el nodo juez.

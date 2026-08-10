@@ -1,0 +1,37 @@
+/home/sergio/lab/rag/store.py:148: UserWarning: The model intfloat/multilingual-e5-large now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+  return TextEmbedding(
+  recuperar -> evaluar -> generar    horas-extra
+  recuperar -> evaluar -> generar    jornada-maxima
+  recuperar -> evaluar -> generar    vacaciones
+  recuperar -> evaluar -> generar    descanso-entre-jornadas
+  recuperar -> evaluar -> generar    descanso-semanal
+  recuperar -> evaluar -> generar    despido-improcedente
+  recuperar -> evaluar -> generar    despido-objetivo
+  recuperar -> evaluar -> generar    edad-minima
+  recuperar -> evaluar -> generar    lactancia
+  recuperar -> evaluar -> generar    trabajo-nocturno
+  recuperar -> evaluar -> generar    periodo-prueba
+  recuperar -> evaluar -> generar    traslado
+  recuperar -> evaluar -> generar    bajar-sueldo
+  recuperar -> evaluar -> generar    teletrabajo-gastos
+  recuperar -> evaluar -> generar    teletrabajo-regular
+  recuperar -> evaluar -> generar    teletrabajo-volver
+  recuperar -> evaluar -> generar    teletrabajo-acuerdo
+  recuperar -> evaluar -> generar    teletrabajo-fichar
+  recuperar -> evaluar -> generar    teletrabajo-control
+  recuperar -> evaluar -> abstenerse fuera-iva
+  recuperar -> evaluar -> abstenerse fuera-smi-importe
+  recuperar -> evaluar -> generar    iva-acotado
+  recuperar -> evaluar -> abstenerse fuera-jubilacion
+  recuperar -> evaluar -> abstenerse fuera-paro
+
+    n_en_corpus              20
+    n_fuera_corpus           4
+    acierto_respuesta        0.75
+    abstencion_correcta      1.0
+    llamadas_modelo_grande   20/24
+    cortadas_por_el_juez     []
+    abstenidas_al_generar    ['despido-objetivo', 'teletrabajo-regular', 'teletrabajo-volver', 'teletrabajo-fichar']
+    segundos                 384.1
+
+  Detalle en eval-grafo.json
