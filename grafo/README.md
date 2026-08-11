@@ -62,7 +62,8 @@ similitudes y qué modelo respondió:
 ## Resultados
 
 Las mismas 24 preguntas del RAG original (20 con respuesta en el corpus, 4 de
-materias que no regula), misma configuración: e5, semantic, k=3.
+materias que no regula), misma configuración: e5, semantic, k=3. Ambas columnas
+son de tandas del 11/08 con el generador a **temperatura 0**.
 
 | | RAG original | Este grafo |
 |--|--|--|
@@ -81,16 +82,21 @@ Lo que hay que leer en esa tabla:
   preguntas que sí tenían respuesta. Era el riesgo de meter un filtro delante y
   es la columna que más importa.
 - **La diferencia de acierto (0,70 → 0,75) no cuenta como mejora.** El grafo no
-  toca la generación: son las mismas fuentes y el mismo prompt. Es variación
-  entre ejecuciones de un modelo no determinista sobre 20 preguntas — una
-  pregunta arriba o abajo son 5 puntos.
+  toca la generación: son las mismas fuentes y el mismo prompt. Los 5 puntos son
+  **una sola pregunta, `teletrabajo-gastos`**, y encima es la pregunta que el
+  corrector puntúa mal: en las dos tandas la respuesta trae el dato correcto (los
+  equipos los paga la empresa), pero en la del RAG añade una frase avisando de
+  que el texto no dice quién paga la luz, y el corrector la lee como abstención.
+  El modelo tampoco es reproducible bit a bit ni a temperatura 0 —Groq sirve
+  `gpt-oss-20b` en lotes—, así que una pregunta de 20 puede bailar entre tandas.
+  Con esta muestra, la diferencia no es señal.
 - Las 4 preguntas que aún acaban en «no lo encuentro» (`despido-objetivo`,
   `teletrabajo-regular`, `teletrabajo-volver`, `teletrabajo-fichar`) las corta
   **el modelo grande al redactar**, no el juez: es el comportamiento que ya
   tenía el RAG original. Por eso la evaluación separa `cortadas_por_el_juez` de
   `abstenidas_al_generar`; sumarlas escondería de quién es la culpa.
 
-Recall@3 (0,89) y MRR (0,74) no se recalculan: la recuperación es literalmente
+Recall@3 (0,90) y MRR (0,74) no se recalculan: la recuperación es literalmente
 la misma función, así que son los números de `evaluate.py` sin tocar.
 
 ### El juez, en su segunda versión

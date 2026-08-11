@@ -71,43 +71,62 @@ la respuesta cambia.
 
 | Búsqueda | Sin reescritura | Con reescritura |
 |---|---|---|
-| BM25 (palabras) | 0,42 | 0,68 |
-| MiniLM-L12 (384 dim, 220 MB) | 0,79 | 0,84 |
-| mpnet-base (768 dim, 1 GB) | 0,79 | 0,84 |
-| **e5-large (1024 dim, 2,2 GB)** | 0,89 | **0,89** (MRR 0,73) |
-| e5-large híbrido (BM25+vectores) | 0,68 | 0,79 |
+| BM25 (palabras) | 0,45 | 0,65 |
+| MiniLM-L12 (384 dim, 220 MB) | 0,60 | 0,60 |
+| mpnet-base (768 dim, 1 GB) | 0,70 | 0,70 |
+| **e5-large (1024 dim, 2,2 GB)** | 0,70 | **0,90** (MRR 0,74) |
+| e5-large híbrido (BM25+vectores) | 0,60 | 0,75 |
+
+Toda la tabla es de la misma tanda (11/08, `k=3`, 20 preguntas con respuesta en
+el corpus). La versión anterior de este README daba aquí números de `k=5` sobre
+19 preguntas mezclados con una configuración de `k=3`; ya no.
+
+**La reescritura solo ayuda al modelo bueno**: sube e5-large 20 puntos
+(0,70 → 0,90) y BM25 otros 20, pero a MiniLM y a mpnet no les mueve el recall.
+Traducir la pregunta al registro del documento sirve si el espacio de embeddings
+distingue esos matices; si no, da igual cómo se pregunte.
 
 **Respuesta** — configuración que se publica (e5-large + reescritura + artículo
 completo + gpt-oss-20b), fichero [eval-resultados-k3.json](eval-resultados-k3.json):
 
 | Métrica | Valor |
 |---|---|
-| recall@3 | 0,89 |
+| recall@3 | 0,90 |
 | MRR | 0,74 |
-| Respuestas con el dato correcto | 0,79 |
+| Respuestas con el dato correcto | 0,70 |
 | Abstenciones correctas (preguntas fuera del corpus) | 4/4 |
 
-**Bajar de `k=5` a `k=3` no costó recuperación**: 17 de 19 preguntas en ambos
-casos, mismo MRR. El artículo correcto, cuando se encuentra, está siempre entre
-los tres primeros — los otros dos fragmentos solo engordaban el contexto.
+**Bajar de `k=5` a `k=3` no costó recuperación**: recall@5 0,895 sobre las 19
+preguntas de aquella tanda, recall@3 0,90 sobre las 20 de ahora, mismo MRR. El
+artículo correcto, cuando se encuentra, está siempre entre los tres primeros —
+los otros dos fragmentos solo engordaban el contexto.
 
-> **Por qué el acierto es 0,79 y no el 0,74 que imprime una tanda suelta.** El
-> generador va a temperatura 0,1, así que no es determinista: en la tanda del
-> 02/08 falló `teletrabajo-gastos`, que **al repetirla acierta 4 de 4 veces,
-> tanto con `k=3` como con `k=5`**. Una pregunta sobre 19 vale 5 puntos, y esa
-> pregunta no se pierde por el recorte de contexto sino por el muestreo.
-> Además el criterio es tosco: aquella respuesta traía el dato correcto *y
-> encima* avisaba de que el texto no dice quién paga la luz — y la frase de
-> aviso se cuenta como abstención total.
+> **Este README dijo 0,79 hasta el 11/08, y era un número mal copiado.** El 0,79
+> (0,789) sale de [eval-resultados.json](eval-resultados.json), que es la tanda
+> con **`k=5` y 19 preguntas**; el fichero que esta tabla cita, con la
+> configuración que de verdad se publica, dice 0,70 desde el principio. No fue
+> el modelo bailando: fue la celda de una tabla tomada de la ejecución
+> equivocada, y la explicación que había aquí —que el generador es no
+> determinista— tapaba el error en vez de encontrarlo.
 >
-> Para que el número deje de bailar habría que **poner la temperatura a 0** y
-> volver a medir. Pendiente.
+> Ahora baila menos: el generador está a **temperatura 0** (antes 0,1) y la
+> tanda del 11/08 reproduce exactamente el fichero publicado —
+> acierto 0,70, recall@3 0,90, MRR 0,742. «Menos», no «nada»: Groq sirve
+> `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el mismo texto siempre,
+> así que una pregunta de 20 —5 puntos— puede cambiar de tanda a tanda.
+>
+> El criterio de acierto sigue siendo tosco y se lleva por delante al menos una
+> pregunta buena: en `teletrabajo-gastos` la respuesta **trae el dato correcto**
+> (los equipos los paga la empresa) *y encima* avisa de que el texto no dice
+> quién paga la luz — y esa frase de aviso se cuenta como abstención total.
 
-De los fallos, 2 son de recuperación y el resto del generador: encontró el
-artículo correcto y aun así dijo que no lo encontraba. Con `llama-3.3-70b` esos
-casos salen bien (acierto 0,84), pero gasta la cuota diaria de la cuenta mucho
-antes, así que la demo pública va con el modelo pequeño. Es el intercambio real:
-5 puntos de acierto a cambio de que la demo siga en pie por la tarde.
+De los 6 fallos, 2 son de recuperación (`teletrabajo-volver`,
+`teletrabajo-fichar`) y el resto del generador: encontró el artículo correcto y
+aun así dijo que no lo encontraba. Con `llama-3.3-70b` esos casos salían bien en
+una prueba a mano —**tanda no conservada, así que ese número no está en el repo
+y no lo doy**—, pero gasta la cuota diaria de la cuenta mucho antes, así que la
+demo pública va con el modelo pequeño. Es el intercambio real: acierto a cambio
+de que la demo siga en pie por la tarde.
 
 Reproducible:
 
@@ -118,7 +137,7 @@ Reproducible:
 
 ### Lo que salió al revés
 
-- **El híbrido BM25 + vectores empeora aquí** (0,79 frente a 0,89), y por eso va
+- **El híbrido BM25 + vectores empeora aquí** (0,75 frente a 0,90), y por eso va
   desactivado. RRF premia que las dos listas coincidan; cuando una de ellas es
   bastante peor que la otra, la arrastra. Barrí el peso de BM25 y el óptimo
   medido era **cero**. En un corpus con más referencias literales (códigos de

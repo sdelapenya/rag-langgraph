@@ -9,7 +9,7 @@
       "n_fuera_corpus": 4,
       "recall@3": 0.9,
       "mrr": 0.742,
-      "segundos": 296.4,
+      "segundos": 283.9,
       "acierto_respuesta": 0.7,
       "abstencion_correcta": 1.0
     },
@@ -20,7 +20,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 35. Horas extraordinarias",
-        "respuesta": "El máximo de horas extraordinarias que puedes realizar al año es de ochenta horas, salvo que exista una excepción prevista en el apartado 3 del artículo 35. [1]",
+        "respuesta": "El máximo de horas extraordinarias que puedes realizar al año es de ochenta horas, salvo que el convenio o contrato establezcan otra limitación. [1]",
         "acierta": true
       },
       {
@@ -47,7 +47,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 34. Jornada",
-        "respuesta": "El descanso mínimo entre el final de una jornada y el comienzo de la siguiente es de **doce horas**. [1]",
+        "respuesta": "El descanso mínimo entre el final de una jornada y el comienzo de la siguiente es de **doce horas** [1].",
         "acierta": true
       },
       {
@@ -56,7 +56,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 37. Descanso semanal, fiestas y permisos",
-        "respuesta": "Un día y medio ininterrumpido, normalmente la tarde del sábado, la mañana del lunes y el día completo del domingo. Para menores de 18 años, el mínimo es de dos días ininterrumpidos. [1]",
+        "respuesta": "Un descanso mínimo semanal de día y medio ininterrumpido, que normalmente comprende la tarde del sábado, la mañana del lunes y el día completo del domingo. [1]",
         "acierta": true
       },
       {
@@ -65,7 +65,7 @@
         "recuperado": true,
         "rango": 2,
         "top1": "et:Disposición transitoria undécima. Indemnizaciones por despido improcedente",
-        "respuesta": "La indemnización por despido improcedente es de **treinta y tres días de salario por cada año de servicio** (prorrateado por meses), con un máximo de **veinticuatro mensualidades** [2].",
+        "respuesta": "La indemnización por despido improcedente equivale a **treinta y tres días de salario por cada año de servicio** (prorrateado por meses cuando el tiempo sea inferior a un año) y no puede superar las **veinticuatro mensualidades** [2].  \n\nSi el contrato se firmó antes del 12 de febrero de 2012, la parte anterior a esa fecha se calcula a **cuarenta y cinco días de salario por año** y la posterior a esa fecha a treinta y tres días, con el mismo límite máximo de cuarenta y dos mensualidades [1].",
         "acierta": true
       },
       {
@@ -83,7 +83,7 @@
         "recuperado": true,
         "rango": 2,
         "top1": "et:Artículo 7. Capacidad para contratar",
-        "respuesta": "Se puede empezar a trabajar a partir de los 16 años, siempre que se cumplan las condiciones de consentimiento y autorización establecidas. [2] [1]",
+        "respuesta": "Se puede trabajar a partir de los 16 años, siempre que se cumplan las condiciones establecidas (por ejemplo, consentimiento de los padres o tutores). [2] [1]",
         "acierta": true
       },
       {
@@ -92,7 +92,7 @@
         "recuperado": true,
         "rango": 3,
         "top1": "et:Disposición adicional vigesimosegunda. Permisos de nacimiento, adopción, del progenitor diferente de la madre biológica y lactancia del personal laboral al servicio de las Administraciones públicas",
-        "respuesta": "Tienes derecho a una hora de ausencia diaria para lactar, que puedes dividir en dos fracciones, hasta que el lactante cumpla nueve meses. Si ambos progenitores (o adoptantes/guardadores) ejercen el mismo derecho, el periodo puede extenderse hasta que el lactante cumpla doce meses, con reducción proporcional del salario a partir de los nueve meses. También puedes sustituir esa hora por una reducción de jornada de media hora con la misma finalidad. [3]",
+        "respuesta": "Tienes derecho a una hora de ausencia diaria para lactar, que puedes dividir en dos fracciones, hasta que el lactante cumpla nueve meses. Si ambos progenitores (o adoptantes/guardadores) ejercen el mismo derecho, el periodo puede extenderse hasta que el lactante cumpla doce meses, con reducción proporcional del salario a partir de los nueve meses. Esta hora puede sustituirse por una reducción de jornada de media hora con la misma finalidad. [3]",
         "acierta": true
       },
       {
@@ -101,7 +101,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 36. Trabajo nocturno, trabajo a turnos y ritmo de trabajo",
-        "respuesta": "El trabajo nocturno se considera el realizado entre las diez de la noche y las seis de la mañana. [1]",
+        "respuesta": "El trabajo nocturno se considera aquel realizado entre las diez de la noche y las seis de la mañana. [1]",
         "acierta": true
       },
       {
@@ -110,7 +110,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 14. Periodo de prueba",
-        "respuesta": "El periodo de prueba no puede superar:\n\n- 6 meses para técnicos titulados,  \n- 2 meses para los demás trabajadores,  \n- 3 meses para trabajadores no técnicos en empresas con menos de 25 empleados.  \nEn contratos temporales de duración ≤ 6 meses, el máximo es 1 mes, salvo que el convenio colectivo disponga otra cosa. [1]",
+        "respuesta": "El periodo de prueba puede durar hasta seis meses para técnicos titulados y hasta dos meses para los demás trabajadores. En empresas con menos de 25 empleados, el límite es de tres meses para los trabajadores que no sean técnicos titulados. Para contratos temporales de duración determinada de hasta seis meses, el periodo de prueba no puede superar un mes salvo convenio colectivo que disponga otra cosa. [1]",
         "acierta": true
       },
       {
@@ -119,7 +119,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 40. Movilidad geográfica",
-        "respuesta": "Sí. La empresa puede trasladarte a otro centro de trabajo, pero solo si existen razones económicas, técnicas, organizativas o de producción que lo justifiquen y debe notificarte con al menos treinta días de antelación. En ese caso, puedes aceptar el traslado con compensación por gastos o rechazarlo y optar por la extinción del contrato con una indemnización de veinte días de salario por año de servicio (máximo doce mensualidades) [1].",
+        "respuesta": "Sí. Según el Estatuto de los Trabajadores, la empresa puede trasladarte a otro centro de trabajo que exija cambio de residencia siempre que existan razones económicas, técnicas, organizativas o de producción que lo justifiquen y se te notifique con al menos treinta días de antelación. Si no aceptas el traslado, puedes optar por la extinción del contrato y recibir una indemnización de veinte días de salario por año de servicio, prorrateada en caso de periodos inferiores a un año [1].",
         "acierta": true
       },
       {
@@ -128,7 +128,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "et:Artículo 41. Modificaciones sustanciales de condiciones de trabajo",
-        "respuesta": "Sí. La empresa puede modificar sustancialmente el salario o el horario cuando existan razones económicas, técnicas, organizativas o de producción, pero debe notificar al trabajador con una antelación mínima de quince días antes de que la modificación sea efectiva [1]. Si la modificación le perjudica, el trabajador puede rescindir el contrato y reclamar una indemnización.",
+        "respuesta": "No, la empresa no puede bajar tu sueldo o cambiar tu horario sin previo aviso. Según el Estatuto de los Trabajadores, las modificaciones sustanciales de condiciones de trabajo, como la remuneración o el horario, deben ser notificadas al trabajador con una antelación mínima de quince días [1]. Si la modificación afecta a tu contrato, tendrás derecho a rescindirlo y a recibir una indemnización.",
         "acierta": true
       },
       {
@@ -137,7 +137,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "teletrabajo:Artículo 12. El derecho al abono y compensación de gastos",
-        "respuesta": "El trabajo a distancia debe ser sufragado o compensado por la empresa, por lo que el ordenador y los gastos vinculados a su uso deben ser cubiertos por la empresa [1]. En cuanto a la luz, los fragmentos no mencionan quién la paga, por lo que no encuentro esa información en los documentos.",
+        "respuesta": "El ordenador y los demás equipos deben ser proporcionados y mantenidos por la empresa [1][2].  \nEn cuanto a la luz, la normativa no menciona explícitamente quién la cubre, por lo que no encuentro esa información en los documentos.",
         "acierta": false
       },
       {
@@ -155,7 +155,7 @@
         "recuperado": false,
         "rango": null,
         "top1": "teletrabajo:Preámbulo",
-        "respuesta": "Sí, puedes volver a la oficina. La normativa establece que la persona trabajadora tiene derecho a regresar a la situación anterior a la adaptación una vez concluido el período acordado o previsto, o cuando desaparezcan las causas que motivaron la solicitud de teletrabajo [3].",
+        "respuesta": "No encuentro esa información en los documentos.",
         "acierta": false
       },
       {
@@ -164,7 +164,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "teletrabajo:Artículo 6. Obligaciones formales del acuerdo de trabajo a distancia",
-        "respuesta": "Sí. El acuerdo de trabajo a distancia debe formalizarse por escrito antes de que comience el teletrabajo. La empresa debe entregar una copia a la representación legal de los trabajadores y posteriormente a la oficina de empleo [1].",
+        "respuesta": "Sí. El acuerdo de trabajo a distancia debe realizarse por escrito y formalizarse **antes de que se inicie el trabajo a distancia** [1].",
         "acierta": true
       },
       {
@@ -182,7 +182,7 @@
         "recuperado": true,
         "rango": 2,
         "top1": "teletrabajo:Artículo 18. Derecho a la desconexión digital",
-        "respuesta": "Sí. Según el Artículo 22, la empresa puede adoptar las medidas que estime oportunas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales, incluida la utilización de medios telemáticos, siempre que se respeten la dignidad del trabajador y se tengan en cuenta sus circunstancias personales, como la discapacidad. [2]",
+        "respuesta": "Sí. Según el Artículo 22 de la Ley de Trabajo a Distancia, la empresa puede adoptar las medidas que estime oportunas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales, incluida la utilización de medios telemáticos, siempre que se respeten la dignidad del trabajador y sus circunstancias personales [2].",
         "acierta": true
       },
       {
@@ -203,7 +203,7 @@
         "recuperado": true,
         "rango": 1,
         "top1": "teletrabajo:Disposición adicional séptima. Tipo impositivo aplicable del Impuesto sobre el Valor Añadido a las entregas, importaciones y adquisiciones intracomunitarias de bienes necesarios para combatir los efectos del COVID-19",
-        "respuesta": "El tipo del IVA es 0 % para las entregas, importaciones y adquisiciones intracomunitarias de bienes referidos en el Anexo de esta Ley cuyos destinatarios sean entidades de Derecho Público, clínicas o centros hospitalarios, o entidades privadas de carácter social. [1]",
+        "respuesta": "El tipo del IVA es del 0 % para las entregas, importaciones y adquisiciones intracomunitarias de bienes referidos en el Anexo de esta Ley cuyos destinatarios sean entidades de Derecho Público, clínicas o centros hospitalarios, o entidades privadas de carácter social. [1]",
         "acierta": false
       },
       {

@@ -217,7 +217,7 @@ def ask(question: str, fuentes: list[dict], api_key: str) -> tuple[str, str]:
     return _generar(
         api_key, MODEL_LLM,
         SYSTEM.format(context=build_context(fuentes)), question,
-        temperature=0.1, max_tokens=700,
+        temperature=0.0, max_tokens=700,
     )
 
 

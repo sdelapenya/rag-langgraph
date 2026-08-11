@@ -93,7 +93,7 @@ PAGE = """
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="sdelapenya.dev">
 <meta property="og:title" content="RAG — respuestas con citas verificables">
-<meta property="og:description" content="Preguntas en lenguaje natural sobre normativa laboral, respondidas solo con lo que dicen los documentos y citando artículo y página. Evaluado: recall@3 0,89 · acierto 0,79.">
+<meta property="og:description" content="Preguntas en lenguaje natural sobre normativa laboral, respondidas solo con lo que dicen los documentos y citando artículo y página. Evaluado: recall@3 0,90 · acierto 0,70.">
 <meta property="og:url" content="https://rag.sdelapenya.dev/">
 <meta name="twitter:card" content="summary">
 <style>
