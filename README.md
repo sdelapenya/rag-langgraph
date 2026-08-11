@@ -1,5 +1,7 @@
 # RAG sobre documentos — preguntas en lenguaje natural con citas verificables
 
+[![CI](https://github.com/sdelapenya/rag-langgraph/actions/workflows/ci.yml/badge.svg)](https://github.com/sdelapenya/rag-langgraph/actions/workflows/ci.yml)
+
 Sistema de preguntas y respuestas sobre documentos propios: recupera los pasajes
 relevantes con embeddings, responde **solo** con lo que dicen esos pasajes y
 cita documento, artículo y página para que cualquiera pueda comprobarlo.
@@ -191,7 +193,27 @@ Web:
 RAG_MODEL=e5 .venv/bin/python3 app.py         # http://localhost:5050
 ```
 
-Despliegue con systemd y túnel de Cloudflare: [deploy/README.md](deploy/README.md).
+### Con Docker
+
+Sin instalar Python ni bajarse dependencias a mano:
+
+```bash
+python3 ingest.py              # crea ./index, que se monta como volumen
+cp .env.example .env           # y pon dentro tu GROQ_API_KEY
+docker compose up --build      # http://127.0.0.1:8016
+```
+
+El índice no va dentro de la imagen a propósito: pesa, caduca cada vez que
+cambia el corpus y obligaría a reconstruir la imagen para reindexar. Se genera
+fuera y se monta de solo lectura. La caché de modelos de embeddings vive en un
+volumen con nombre para no volver a descargarla en cada arranque.
+
+El contenedor escucha en el **8016** y no en el 8006 porque en el servidor ese
+puerto lo ocupa el mismo servicio bajo systemd, y los dos tienen que poder
+convivir. El proceso corre sin privilegios (uid 10001).
+
+Despliegue en producción con systemd y túnel de Cloudflare:
+[deploy/README.md](deploy/README.md).
 
 ### Ajustes por variable de entorno
 
@@ -208,6 +230,35 @@ Despliegue con systemd y túnel de Cloudflare: [deploy/README.md](deploy/README.
 | `RAG_CACHE_DIR` | `~/.cache/fastembed` | dónde se guardan los modelos ONNX |
 | `RAG_LIMITE_IP` | `10` | preguntas por hora y por IP en la web |
 
+## Desarrollo
+
+```bash
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python -m pytest      # 38 tests, ~0,3 s
+.venv/bin/ruff check .
+```
+
+Los tests **no llaman a ninguna API ni descargan modelos**: el índice de prueba
+se construye a mano con vectores inventados, y las llamadas a Groq y Gemini se
+sustituyen por dobles. Si alguna vez hace falta una clave para que pasen, es que
+se ha colado una llamada de verdad.
+
+Lo que cubren no es el porcentaje de líneas, son las decisiones que costaron
+trabajo y que un cambio inocente rompería sin avisar:
+
+- que `artículo 83.2` dentro de una frase **no** se tome por un encabezado y
+  parta el documento por la mitad;
+- que la página se guarde línea a línea, para que un artículo de cuatro páginas
+  cite la correcta;
+- que al recomponer el artículo no se duplique el texto solapado;
+- que si el artículo no cabe entero, la ventana se centre en el fragmento que
+  casó con la pregunta y no corte justo por donde estaba la respuesta;
+- que sin fuentes el sistema se abstenga **sin gastar una llamada**;
+- que una cuota diaria agotada pase a Gemini en vez de reintentar en balde.
+
+En cada `push` y cada pull request, [CI](.github/workflows/ci.yml) pasa el
+linter y los tests, y comprueba que la imagen de Docker construye.
+
 ## Estructura
 
 | Fichero | Qué hace |
@@ -219,6 +270,9 @@ Despliegue con systemd y túnel de Cloudflare: [deploy/README.md](deploy/README.
 | [app.py](app.py) | web y API JSON, con caché y límite por IP |
 | [evaluate.py](evaluate.py) | métricas |
 | [eval-preguntas.json](eval-preguntas.json) | conjunto de evaluación |
+| [tests/](tests/) | 38 tests sin red ni claves |
+| [Dockerfile](Dockerfile) · [docker-compose.yml](docker-compose.yml) | imagen sin privilegios, índice como volumen |
+| [.github/workflows/ci.yml](.github/workflows/ci.yml) | linter, tests y build de la imagen |
 | [grafo/](grafo/) | el mismo RAG como grafo de estados con LangGraph, con su propia evaluación |
 
 ## Límites conocidos

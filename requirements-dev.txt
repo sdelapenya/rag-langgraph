@@ -1,0 +1,5 @@
+# Dependencias solo de desarrollo. En producción se instala requirements.txt.
+-r requirements.txt
+
+pytest>=8,<9
+ruff>=0.6,<1

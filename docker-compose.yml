@@ -1,0 +1,42 @@
+# Levanta la demo en local:
+#
+#   python3 ingest.py            # crea ./index (no va en el repo)
+#   cp .env.example .env         # y pon dentro tu GROQ_API_KEY
+#   docker compose up --build
+#
+# Luego: http://127.0.0.1:8016
+#
+# Compose lee ./.env por su cuenta para sustituir las ${VARIABLES} de abajo,
+# así que no hace falta declarar env_file.
+
+services:
+  rag:
+    build: .
+    image: rag-demo:local
+    container_name: rag-demo
+    # 8016 y no 8006: en el servidor el 8006 lo ocupa el mismo servicio
+    # corriendo bajo systemd, y los dos tienen que poder convivir.
+    # Solo en loopback; quien lo publique que ponga delante su nginx.
+    ports:
+      - "127.0.0.1:8016:5050"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      # opcional: respaldo cuando Groq agota la cuota diaria
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      # minilm por defecto (384 dim, ~100 MB): arranca rápido y no come RAM.
+      # El servidor usa e5, que mide mejor pero se baja ~1 GB.
+      RAG_MODEL: ${RAG_MODEL:-minilm}
+      RAG_MODE: semantic
+      RAG_TOP_K: "3"
+      RAG_MAX_CHARS: "2500"
+      RAG_LIMITE_IP: "10"
+    volumes:
+      # el índice se genera fuera y se monta de solo lectura
+      - ./index:/app/index:ro
+      # la caché de modelos sobrevive al contenedor: sin esto se vuelve a
+      # descargar el modelo de embeddings en cada arranque
+      - modelos:/cache
+    restart: unless-stopped
+
+volumes:
+  modelos:

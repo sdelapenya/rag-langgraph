@@ -4,3 +4,9 @@ __pycache__/
 *.pyc
 # índices: se regeneran con ingest.py y pesan de más para el repo
 index/
+
+# claves: el .env lo lee docker compose y nunca debe subir. .env.example sí.
+.env
+
+.pytest_cache/
+.ruff_cache/

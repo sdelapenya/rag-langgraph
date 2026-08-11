@@ -122,7 +122,9 @@ def _rrf(rankings: list[list[int]], weights: list[float] | None = None,
     """
     weights = weights or [1.0] * len(rankings)
     fused: dict[int, float] = {}
-    for ranking, weight in zip(rankings, weights):
+    # strict: si los pesos no cuadran con las listas, zip descartaría en
+    # silencio la última lista y la fusión saldría mal sin avisar
+    for ranking, weight in zip(rankings, weights, strict=True):
         for pos, idx in enumerate(ranking, start=1):
             fused[idx] = fused.get(idx, 0.0) + weight / (k + pos)
     return fused
@@ -150,7 +152,7 @@ class Index:
         )
 
     @classmethod
-    def build(cls, chunks: list[Chunk], model_key: str = DEFAULT_MODEL) -> "Index":
+    def build(cls, chunks: list[Chunk], model_key: str = DEFAULT_MODEL) -> Index:
         cfg = MODELS[model_key]
         embedder = cls._embedder_for(model_key)
         texts = [cfg["passage_prefix"] + c.text for c in chunks]
@@ -189,7 +191,7 @@ class Index:
         return directory
 
     @classmethod
-    def load(cls, model_key: str = DEFAULT_MODEL, directory: Path | None = None) -> "Index":
+    def load(cls, model_key: str = DEFAULT_MODEL, directory: Path | None = None) -> Index:
         directory = Path(directory or INDEX_DIR) / model_key
         if not (directory / "vectors.npy").exists():
             raise FileNotFoundError(
