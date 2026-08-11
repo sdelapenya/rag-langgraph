@@ -1,0 +1,24 @@
+.git
+.github
+.venv
+grafo/.venv
+__pycache__
+**/__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+
+# el índice se monta como volumen, no se hornea en la imagen (pesa y caduca)
+index/
+corpus/
+docs/
+
+# nunca dentro de la imagen
+.env
+*.env
+secrets/
+
+tests/
+eval-*.json
+eval-*.txt
+*.md
