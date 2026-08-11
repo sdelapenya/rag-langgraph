@@ -23,7 +23,8 @@ from collections import OrderedDict, defaultdict, deque
 
 from flask import Flask, jsonify, render_template_string, request
 
-from rag import MODEL_LLM, TOP_K as RAG_TOP_K, _load_env_key, answer, expand_query
+from rag import MODEL_LLM, _load_env_key, answer, expand_query
+from rag import TOP_K as RAG_TOP_K
 from store import DEFAULT_MODE, DEFAULT_MODEL, Index
 
 MODE = DEFAULT_MODE

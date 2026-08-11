@@ -1,0 +1,31 @@
+# Configuración de herramientas. No es un paquete instalable a propósito: los
+# módulos son de primer nivel (rag.py, store.py...) y así se ejecutan igual en
+# local, bajo systemd y dentro del contenedor.
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".venv", "index", "corpus", "grafo/.venv"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "W",    # avisos
+    "I",    # orden de imports
+    "UP",   # sintaxis moderna
+    "B",    # trampas comunes (bugbear)
+    "C4",   # comprensiones
+]
+ignore = [
+    "E501",  # el largo de línea lo vigila el formateador, no el linter
+    "B008",  # llamadas en argumentos por defecto: aquí no se usa ese patrón
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["chunking", "rag", "store", "app", "ingest", "evaluate"]

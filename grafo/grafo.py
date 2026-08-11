@@ -28,7 +28,6 @@ from operator import add
 from typing import Annotated, Literal, TypedDict
 
 import puente  # noqa: F401  — deja ~/lab/rag/ importable; tiene que ir el primero
-
 from langgraph.graph import END, START, StateGraph
 
 # El RAG existente. `_generar` es privado, sí: es la que encadena Groq -> Gemini
