@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Linter y tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Instalar dependencias
+        run: pip install -r requirements-dev.txt
+
+      - name: Linter
+        run: ruff check --output-format=github .
+
+      - name: Tests
+        # los tests no llaman a ninguna API ni bajan modelos: si aquí hace
+        # falta una clave es que se ha colado una llamada de verdad
+        run: pytest
+
+  imagen:
+    name: La imagen construye
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Construir
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: rag-demo:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: La app importa dentro del contenedor
+        # sin índice montado no puede arrancar la web, pero sí comprobar que
+        # las dependencias están completas y el código carga
+        run: docker run --rm rag-demo:ci python -c "import chunking, store, rag; print('ok')"
