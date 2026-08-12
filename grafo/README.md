@@ -63,11 +63,13 @@ similitudes y qué modelo respondió:
 
 Las mismas 24 preguntas del RAG original (20 con respuesta en el corpus, 4 de
 materias que no regula), misma configuración: e5, semantic, k=3. Ambas columnas
-son de tandas del 11/08 con el generador a **temperatura 0**.
+son de tandas del **12/08** con el generador a **temperatura 0** y el prompt
+nuevo (el grafo importa `ask()` del RAG, así que comparte prompt: cuando aquél
+subió de 0,70 a 0,85, este subió con él).
 
 | | RAG original | Este grafo |
 |--|--|--|
-| acierto de respuesta | 0,70 | 0,75 |
+| acierto de respuesta | 0,85 | 0,80 |
 | abstención correcta (4 preguntas de fuera) | 4/4 | **4/4** |
 | llamadas al modelo grande | 24/24 | **20/24** |
 | abstenciones provocadas por el juez sobre preguntas buenas | — | **0** |
@@ -81,18 +83,19 @@ Lo que hay que leer en esa tabla:
 - **Cero abstenciones indebidas**: el juez no cortó ni una sola de las 20
   preguntas que sí tenían respuesta. Era el riesgo de meter un filtro delante y
   es la columna que más importa.
-- **La diferencia de acierto (0,70 → 0,75) no cuenta como mejora.** El grafo no
-  toca la generación: son las mismas fuentes y el mismo prompt. Los 5 puntos son
-  **una sola pregunta, `teletrabajo-gastos`**, y encima es la pregunta que el
-  corrector puntúa mal: en las dos tandas la respuesta trae el dato correcto (los
-  equipos los paga la empresa), pero en la del RAG añade una frase avisando de
-  que el texto no dice quién paga la luz, y el corrector la lee como abstención.
-  El modelo tampoco es reproducible bit a bit ni a temperatura 0 —Groq sirve
-  `gpt-oss-20b` en lotes—, así que una pregunta de 20 puede bailar entre tandas.
+- **La diferencia de acierto no cuenta, ni antes a favor ni ahora en contra.** El
+  grafo no toca la generación: son las mismas fuentes y el mismo prompt. En
+  julio iba 5 puntos por encima (0,75 frente a 0,70) y hoy va 5 por debajo (0,80
+  frente a 0,85), y en los dos casos es **una sola pregunta de 20**. Hoy es
+  `iva-acotado`: el RAG contesta «0 % **para los bienes necesarios para combatir
+  los efectos del COVID-19**» y el grafo, con el mismo contexto y el mismo
+  prompt, «el tipo del IVA aplicable en ese caso es del 0 %» — dice «en ese caso»
+  pero no nombra el supuesto, y el corrector busca la palabra. Groq sirve
+  `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el mismo texto siempre.
   Con esta muestra, la diferencia no es señal.
-- Las 4 preguntas que aún acaban en «no lo encuentro» (`despido-objetivo`,
-  `teletrabajo-regular`, `teletrabajo-volver`, `teletrabajo-fichar`) las corta
-  **el modelo grande al redactar**, no el juez: es el comportamiento que ya
+- Las 2 preguntas que aún acaban en «no lo encuentro» (`teletrabajo-volver`,
+  `teletrabajo-fichar`) las corta **el modelo grande al redactar**, no el juez —
+  eran 4 antes del prompt nuevo: es el comportamiento que ya
   tenía el RAG original. Por eso la evaluación separa `cortadas_por_el_juez` de
   `abstenidas_al_generar`; sumarlas escondería de quién es la culpa.
 

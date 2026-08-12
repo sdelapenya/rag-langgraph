@@ -2,17 +2,15 @@
   "resumen": {
     "n_en_corpus": 20,
     "n_fuera_corpus": 4,
-    "acierto_respuesta": 0.75,
+    "acierto_respuesta": 0.8,
     "abstencion_correcta": 1.0,
     "llamadas_modelo_grande": "20/24",
     "cortadas_por_el_juez": [],
     "abstenidas_al_generar": [
-      "despido-objetivo",
-      "teletrabajo-regular",
       "teletrabajo-volver",
       "teletrabajo-fichar"
     ],
-    "segundos": 387.2
+    "segundos": 542.2
   },
   "detalle": [
     {
@@ -22,7 +20,7 @@
       "similitud_max": 0.8601,
       "veredicto": "SI: El número máximo anual de horas extras se establece en ochenta.",
       "motivo": "El número máximo anual de horas extras se establece en ochenta.",
-      "respuesta": "El máximo de horas extraordinarias que puedes realizar al año es de ochenta horas, salvo que el convenio o contrato establezcan otra limitación. [1]",
+      "respuesta": "El máximo de horas extraordinarias que puedes realizar al año es de **80 horas** [1]. Esta cifra puede variar si se aplica la excepción prevista en el apartado 3 del mismo artículo.",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -46,7 +44,7 @@
       "similitud_max": 0.8622,
       "veredicto": "SI: Treinta días naturales.",
       "motivo": "Treinta días naturales.",
-      "respuesta": "30 días naturales al año como mínimo. [1]",
+      "respuesta": "El Estatuto establece que la duración mínima de las vacaciones anuales retribuidas no puede ser inferior a treinta días naturales. [1]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -58,7 +56,7 @@
       "similitud_max": 0.828,
       "veredicto": "SI: El plazo mínimo de descanso entre la finalización de una jornada laboral y el inicio de la siguiente es de doce horas.",
       "motivo": "El plazo mínimo de descanso entre la finalización de una jornada laboral y el inicio de la siguiente es de doce horas.",
-      "respuesta": "El descanso mínimo entre el final de una jornada y el comienzo de la siguiente es de **doce horas**. [1]",
+      "respuesta": "El descanso mínimo entre el final de una jornada y el comienzo de la siguiente es de **doce horas** [1].",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -82,7 +80,7 @@
       "similitud_max": 0.8721,
       "veredicto": "SI: A razón de cuarenta y cinco días de salario por año de servicio por el tiempo de prestación de servicios anterior a la fecha del despido, y a razón de treinta y tres días de salario por año de servicio por el tiempo de prestación de servicios posterior.",
       "motivo": "A razón de cuarenta y cinco días de salario por año de servicio por el tiempo de prestación de servicios anterior a la fecha del despido, y a razón de treinta y tres días de salario por año de servicio por el tiempo de prestación de servicios posterior.",
-      "respuesta": "La indemnización por despido improcedente es de **treinta y tres días de salario por cada año de servicio** (prorrateado por meses cuando el tiempo sea inferior a un año) y no puede superar las **veinticuatro mensualidades** [2].  \n\nSi el contrato se firmó **antes del 12 de febrero de 2012**, la parte anterior a esa fecha se calcula a **cuarenta y cinco días de salario por año** y la posterior a esa fecha a **treinta y tres días por año** [1].",
+      "respuesta": "La indemnización por despido improcedente equivale a **treinta y tres días de salario por cada año de servicio** (prorrateándose por meses los periodos inferiores a un año), con un máximo de veinticuatro mensualidades. [2]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -94,9 +92,9 @@
       "similitud_max": 0.8885,
       "veredicto": "SI: A efectos de indemnización por extinción por causas objetivas, los contratos de fomento de la contratación indefinida celebrados con anterioridad al 12 de febrero de 2012 continuarán rigiéndose por la normativa a",
       "motivo": "A efectos de indemnización por extinción por causas objetivas, los contratos de fomento de la contratación indefinida celebrados con anterioridad al 12 de febrero de 2012 continuarán rigiéndose por la normativa a",
-      "respuesta": "No encuentro esa información en los documentos.",
+      "respuesta": "En un despido por causas objetivas procedente, el trabajador tiene derecho a la indemnización prevista en el apartado 1 del artículo 53 del Estatuto de los Trabajadores. [2]",
       "cortada_por_juez": false,
-      "abstencion_indebida": true,
+      "abstencion_indebida": false,
       "acierta": false
     },
     {
@@ -106,7 +104,7 @@
       "similitud_max": 0.8521,
       "veredicto": "SI: Se establece en 16 años para menores con consentimiento de sus padres o tutores.",
       "motivo": "Se establece en 16 años para menores con consentimiento de sus padres o tutores.",
-      "respuesta": "Se puede trabajar a partir de los 16 años, siempre que se cumplan las condiciones establecidas (por ejemplo, consentimiento de los padres o tutor). [2] [1]",
+      "respuesta": "Se puede empezar a trabajar a partir de los 16 años, siempre que se cumplan las condiciones de consentimiento y autorización establecidas. [2] [1]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -118,7 +116,7 @@
       "similitud_max": 0.8417,
       "veredicto": "SI: El permiso de lactancia materna establecido en el artículo 37.4.",
       "motivo": "El permiso de lactancia materna establecido en el artículo 37.4.",
-      "respuesta": "Tienes derecho a una hora de ausencia diaria para lactar, que puedes dividir en dos fracciones, hasta que el lactante cumpla nueve meses. Si ambos progenitores ejercen el mismo derecho, el periodo puede extenderse hasta que el lactante cumpla doce meses, con reducción proporcional del salario a partir de los nueve meses. También puedes sustituirlo por una reducción de jornada de media hora con la misma finalidad. [3]",
+      "respuesta": "Tienes derecho a una hora de ausencia del trabajo por día para cuidar del lactante, que puedes dividir en dos fracciones, hasta que el niño cumpla **nueve meses**. Si ambos progenitores ejercen este derecho, el periodo puede extenderse hasta **doce meses**, con reducción proporcional del salario a partir de los nueve meses. [3]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -130,7 +128,7 @@
       "similitud_max": 0.8946,
       "veredicto": "SI: Se considera trabajo nocturno el realizado entre las diez de la noche y las seis de la mañana.",
       "motivo": "Se considera trabajo nocturno el realizado entre las diez de la noche y las seis de la mañana.",
-      "respuesta": "El trabajo nocturno se considera aquel realizado entre las diez de la noche y las seis de la mañana. [1]",
+      "respuesta": "El trabajo nocturno se define como el realizado entre las diez de la noche y las seis de la mañana. [1]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -142,7 +140,7 @@
       "similitud_max": 0.8917,
       "veredicto": "SI: Se establecen límites de duración en los convenios colectivos o en el texto.",
       "motivo": "Se establecen límites de duración en los convenios colectivos o en el texto.",
-      "respuesta": "El periodo de prueba puede durar hasta seis meses para técnicos titulados y hasta dos meses para los demás trabajadores. En empresas con menos de 25 empleados, el límite es de tres meses para los trabajadores que no sean técnicos titulados. Para contratos temporales de duración determinada de hasta seis meses, el periodo de prueba no puede superar un mes salvo convenio colectivo que disponga otra cosa. [1]",
+      "respuesta": "El periodo de prueba no puede exceder de:\n\n- 6 meses para técnicos titulados.  \n- 2 meses para los demás trabajadores.  \n- 3 meses en empresas de menos de 25 trabajadores para los que no son técnicos titulados.  \n- 1 mes en contratos temporales de duración determinada de hasta 6 meses.  \n\n[1]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -154,7 +152,7 @@
       "similitud_max": 0.8557,
       "veredicto": "SI: El traslado requiere razones económicas, técnicas, organizativas o de producción.",
       "motivo": "El traslado requiere razones económicas, técnicas, organizativas o de producción.",
-      "respuesta": "Sí. Según el Estatuto de los Trabajadores, la empresa puede trasladarte a otro centro de trabajo que exija cambio de residencia siempre que existan razones económicas, técnicas, organizativas o de producción que lo justifiquen y se te notifique con al menos treinta días de antelación. Si no aceptas el traslado, puedes optar por la extinción del contrato y recibir una indemnización de veinte días de salario por año de servicio, prorrateada en caso de periodos inferiores a un año [1].",
+      "respuesta": "Sí. Según el Estatuto de los Trabajadores, la empresa puede trasladarte a otro centro de trabajo que exija mudanza siempre que existan razones económicas, técnicas, organizativas o de producción que lo justifiquen y se te notifique con al menos treinta días de antelación. Además, tienes derecho a optar entre aceptar el traslado (con compensación por gastos) o a la extinción del contrato con indemnización [1].",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -166,7 +164,7 @@
       "similitud_max": 0.8397,
       "veredicto": "SI: La empresa puede modificar el salario o el horario de trabajo de un empleado sin su consentimiento previo, siempre que existan probadas razones económicas, técnicas, organizativas o de producción.",
       "motivo": "La empresa puede modificar el salario o el horario de trabajo de un empleado sin su consentimiento previo, siempre que existan probadas razones económicas, técnicas, organizativas o de producción.",
-      "respuesta": "Sí, la empresa puede modificar tu salario o tu horario si existen razones económicas, técnicas, organizativas o de producción, pero debe notificarte con al menos quince días de antelación y la modificación se considera sustancial. Si la modificación te perjudica, tienes derecho a rescindir el contrato y a una indemnización de veinte días de salario por año de servicio prorrateada. [1]",
+      "respuesta": "Sí. Según el Estatuto de los Trabajadores, la dirección puede acordar modificaciones sustanciales de las condiciones de trabajo, entre ellas el salario y el horario, cuando existan razones económicas, técnicas, organizativas o de producción [1]. La empresa debe notificar la modificación con al menos quince días de antelación, y si la modificación perjudica al trabajador, éste puede rescindir el contrato y percibir una indemnización [1].",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -178,7 +176,7 @@
       "similitud_max": 0.8391,
       "veredicto": "SI: La empresa asume la responsabilidad de los gastos y medios necesarios.",
       "motivo": "La empresa asume la responsabilidad de los gastos y medios necesarios.",
-      "respuesta": "El trabajo a distancia debe ser sufragado o compensado por la empresa.  \nEl artículo 12 establece que la empresa debe cubrir los gastos relacionados con los equipos, herramientas y medios vinculados a la actividad laboral, y el artículo 11 obliga a la empresa a dotar y mantener dichos medios [1][2].  \nNo se menciona explícitamente la luz o el consumo eléctrico en los fragmentos.",
+      "respuesta": "El trabajo a distancia debe ser sufragado o compensado por la empresa, de modo que la persona trabajadora no asuma gastos de equipos, herramientas y medios vinculados a su actividad laboral. Además, la empresa debe dotar y mantener adecuadamente los medios, equipos y herramientas necesarios, incluido el equipo informático. No se menciona la luz o el consumo eléctrico en los artículos. [1] [2]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -190,10 +188,10 @@
       "similitud_max": 0.8581,
       "veredicto": "SI: Un mínimo del treinta por ciento de la jornada en un periodo de tres meses.",
       "motivo": "Un mínimo del treinta por ciento de la jornada en un periodo de tres meses.",
-      "respuesta": "No encuentro esa información en los documentos.",
+      "respuesta": "Se considera trabajo a distancia regular cuando, en un periodo de referencia de tres meses, se presta al menos el **30 % de la jornada** (o el porcentaje proporcional según la duración del contrato) desde casa. [2]",
       "cortada_por_juez": false,
-      "abstencion_indebida": true,
-      "acierta": false
+      "abstencion_indebida": false,
+      "acierta": true
     },
     {
       "id": "teletrabajo-volver",
@@ -214,7 +212,7 @@
       "similitud_max": 0.8629,
       "veredicto": "SI: El acuerdo de trabajo a distancia deberá realizarse por escrito antes de que se inicie el trabajo a distancia.",
       "motivo": "El acuerdo de trabajo a distancia deberá realizarse por escrito antes de que se inicie el trabajo a distancia.",
-      "respuesta": "Sí. El acuerdo de trabajo a distancia debe realizarse por escrito y formalizarse **antes de que se inicie el trabajo a distancia** [1].",
+      "respuesta": "Sí. El acuerdo de trabajo a distancia debe formalizarse por escrito antes de que comience el teletrabajo, ya sea incorporado al contrato inicial o firmado en un momento posterior. [1]",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -238,7 +236,7 @@
       "similitud_max": 0.8521,
       "veredicto": "SI: La empresa puede adoptar medidas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales.",
       "motivo": "La empresa puede adoptar medidas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales.",
-      "respuesta": "Sí. Según el Artículo 22 de la Ley de Trabajo a Distancia, la empresa puede adoptar las medidas que estime oportunas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales, incluida la utilización de medios telemáticos, siempre que respete la dignidad del trabajador y tenga en cuenta sus circunstancias personales, como una discapacidad. [2]",
+      "respuesta": "Sí. La Ley permite que la empresa adopte las medidas que estime oportunas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales, incluida la utilización de medios telemáticos, siempre que se respeten la dignidad y las circunstancias personales de la persona trabajadora [2].",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": true
@@ -270,7 +268,7 @@
       "similitud_max": 0.8508,
       "veredicto": "SI: Se solicita la determinación del tipo impositivo correspondiente al Impuesto sobre el Valor Añadido (IVA).",
       "motivo": "Se solicita la determinación del tipo impositivo correspondiente al Impuesto sobre el Valor Añadido (IVA).",
-      "respuesta": "El tipo del IVA es 0 % [1].",
+      "respuesta": "El tipo del IVA aplicable en ese caso es del 0 % [1].",
       "cortada_por_juez": false,
       "abstencion_indebida": false,
       "acierta": false

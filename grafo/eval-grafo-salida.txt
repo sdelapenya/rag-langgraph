@@ -1,4 +1,4 @@
-/home/sergio/lab/rag/store.py:148: UserWarning: The model intfloat/multilingual-e5-large now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
+/home/sergio/lab/rag/store.py:150: UserWarning: The model intfloat/multilingual-e5-large now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
   return TextEmbedding(
   recuperar -> evaluar -> generar    horas-extra
   recuperar -> evaluar -> generar    jornada-maxima
@@ -27,11 +27,11 @@
 
     n_en_corpus              20
     n_fuera_corpus           4
-    acierto_respuesta        0.75
+    acierto_respuesta        0.8
     abstencion_correcta      1.0
     llamadas_modelo_grande   20/24
     cortadas_por_el_juez     []
-    abstenidas_al_generar    ['despido-objetivo', 'teletrabajo-regular', 'teletrabajo-volver', 'teletrabajo-fichar']
-    segundos                 384.1
+    abstenidas_al_generar    ['teletrabajo-volver', 'teletrabajo-fichar']
+    segundos                 542.2
 
   Detalle en eval-grafo.json
