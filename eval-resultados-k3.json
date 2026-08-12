@@ -1,223 +1,250 @@
 [
-  {
-    "resumen": {
-      "modelo": "intfloat/multilingual-e5-large",
-      "modo": "semantic",
-      "reescritura": true,
-      "k": 3,
-      "n_en_corpus": 20,
-      "n_fuera_corpus": 4,
-      "recall@3": 0.9,
-      "mrr": 0.742,
-      "segundos": 283.9,
-      "acierto_respuesta": 0.7,
-      "abstencion_correcta": 1.0
-    },
-    "detalle": [
-      {
-        "id": "horas-extra",
-        "pregunta": "¿Cuántas horas extra puedo hacer como máximo al año?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 35. Horas extraordinarias",
-        "respuesta": "El máximo de horas extraordinarias que puedes realizar al año es de ochenta horas, salvo que el convenio o contrato establezcan otra limitación. [1]",
-        "acierta": true
-      },
-      {
-        "id": "jornada-maxima",
-        "pregunta": "¿Cuál es la jornada máxima de trabajo a la semana?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 34. Jornada",
-        "respuesta": "La jornada máxima ordinaria de trabajo es de cuarenta horas semanales de trabajo efectivo, calculadas en promedio anual. [1]",
-        "acierta": true
-      },
-      {
-        "id": "vacaciones",
-        "pregunta": "¿Cuántos días de vacaciones me corresponden al año como mínimo?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 38. Vacaciones anuales",
-        "respuesta": "30 días naturales al año como mínimo. [1]",
-        "acierta": true
-      },
-      {
-        "id": "descanso-entre-jornadas",
-        "pregunta": "Si acabo un turno muy tarde, ¿cuánto tiempo tiene que pasar hasta que empiece el siguiente?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 34. Jornada",
-        "respuesta": "El descanso mínimo entre el final de una jornada y el comienzo de la siguiente es de **doce horas** [1].",
-        "acierta": true
-      },
-      {
-        "id": "descanso-semanal",
-        "pregunta": "¿Cuánto descanso seguido me toca cada semana?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 37. Descanso semanal, fiestas y permisos",
-        "respuesta": "Un descanso mínimo semanal de día y medio ininterrumpido, que normalmente comprende la tarde del sábado, la mañana del lunes y el día completo del domingo. [1]",
-        "acierta": true
-      },
-      {
-        "id": "despido-improcedente",
-        "pregunta": "Si me echan y el despido se declara improcedente, ¿cuánto me tienen que pagar por año trabajado?",
-        "recuperado": true,
-        "rango": 2,
-        "top1": "et:Disposición transitoria undécima. Indemnizaciones por despido improcedente",
-        "respuesta": "La indemnización por despido improcedente equivale a **treinta y tres días de salario por cada año de servicio** (prorrateado por meses cuando el tiempo sea inferior a un año) y no puede superar las **veinticuatro mensualidades** [2].  \n\nSi el contrato se firmó antes del 12 de febrero de 2012, la parte anterior a esa fecha se calcula a **cuarenta y cinco días de salario por año** y la posterior a esa fecha a treinta y tres días, con el mismo límite máximo de cuarenta y dos mensualidades [1].",
-        "acierta": true
-      },
-      {
-        "id": "despido-objetivo",
-        "pregunta": "¿Qué indemnización corresponde en un despido por causas objetivas?",
-        "recuperado": true,
-        "rango": 2,
-        "top1": "et:Disposición transitoria undécima. Indemnizaciones por despido improcedente",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "acierta": false
-      },
-      {
-        "id": "edad-minima",
-        "pregunta": "¿A partir de qué edad se puede empezar a trabajar?",
-        "recuperado": true,
-        "rango": 2,
-        "top1": "et:Artículo 7. Capacidad para contratar",
-        "respuesta": "Se puede trabajar a partir de los 16 años, siempre que se cumplan las condiciones establecidas (por ejemplo, consentimiento de los padres o tutores). [2] [1]",
-        "acierta": true
-      },
-      {
-        "id": "lactancia",
-        "pregunta": "Acabo de ser madre, ¿qué permiso tengo para dar el pecho y hasta cuándo?",
-        "recuperado": true,
-        "rango": 3,
-        "top1": "et:Disposición adicional vigesimosegunda. Permisos de nacimiento, adopción, del progenitor diferente de la madre biológica y lactancia del personal laboral al servicio de las Administraciones públicas",
-        "respuesta": "Tienes derecho a una hora de ausencia diaria para lactar, que puedes dividir en dos fracciones, hasta que el lactante cumpla nueve meses. Si ambos progenitores (o adoptantes/guardadores) ejercen el mismo derecho, el periodo puede extenderse hasta que el lactante cumpla doce meses, con reducción proporcional del salario a partir de los nueve meses. Esta hora puede sustituirse por una reducción de jornada de media hora con la misma finalidad. [3]",
-        "acierta": true
-      },
-      {
-        "id": "trabajo-nocturno",
-        "pregunta": "¿Qué horas cuentan como trabajo nocturno?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 36. Trabajo nocturno, trabajo a turnos y ritmo de trabajo",
-        "respuesta": "El trabajo nocturno se considera aquel realizado entre las diez de la noche y las seis de la mañana. [1]",
-        "acierta": true
-      },
-      {
-        "id": "periodo-prueba",
-        "pregunta": "¿Cuánto puede durar el periodo de prueba en un contrato?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 14. Periodo de prueba",
-        "respuesta": "El periodo de prueba puede durar hasta seis meses para técnicos titulados y hasta dos meses para los demás trabajadores. En empresas con menos de 25 empleados, el límite es de tres meses para los trabajadores que no sean técnicos titulados. Para contratos temporales de duración determinada de hasta seis meses, el periodo de prueba no puede superar un mes salvo convenio colectivo que disponga otra cosa. [1]",
-        "acierta": true
-      },
-      {
-        "id": "traslado",
-        "pregunta": "¿Puede la empresa mandarme a trabajar a otra ciudad y obligarme a mudarme?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 40. Movilidad geográfica",
-        "respuesta": "Sí. Según el Estatuto de los Trabajadores, la empresa puede trasladarte a otro centro de trabajo que exija cambio de residencia siempre que existan razones económicas, técnicas, organizativas o de producción que lo justifiquen y se te notifique con al menos treinta días de antelación. Si no aceptas el traslado, puedes optar por la extinción del contrato y recibir una indemnización de veinte días de salario por año de servicio, prorrateada en caso de periodos inferiores a un año [1].",
-        "acierta": true
-      },
-      {
-        "id": "bajar-sueldo",
-        "pregunta": "¿Puede mi empresa bajarme el sueldo o cambiarme el horario sin mi permiso?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "et:Artículo 41. Modificaciones sustanciales de condiciones de trabajo",
-        "respuesta": "No, la empresa no puede bajar tu sueldo o cambiar tu horario sin previo aviso. Según el Estatuto de los Trabajadores, las modificaciones sustanciales de condiciones de trabajo, como la remuneración o el horario, deben ser notificadas al trabajador con una antelación mínima de quince días [1]. Si la modificación afecta a tu contrato, tendrás derecho a rescindirlo y a recibir una indemnización.",
-        "acierta": true
-      },
-      {
-        "id": "teletrabajo-gastos",
-        "pregunta": "Trabajo desde casa, ¿quién paga el ordenador y la luz?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "teletrabajo:Artículo 12. El derecho al abono y compensación de gastos",
-        "respuesta": "El ordenador y los demás equipos deben ser proporcionados y mantenidos por la empresa [1][2].  \nEn cuanto a la luz, la normativa no menciona explícitamente quién la cubre, por lo que no encuentro esa información en los documentos.",
-        "acierta": false
-      },
-      {
-        "id": "teletrabajo-regular",
-        "pregunta": "¿Cuántos días desde casa hacen falta para que cuente legalmente como trabajo a distancia?",
-        "recuperado": true,
-        "rango": 2,
-        "top1": "teletrabajo:Disposición transitoria primera. Situaciones de trabajo a distancia existentes a la entrada en vigor de esta Ley",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "acierta": false
-      },
-      {
-        "id": "teletrabajo-volver",
-        "pregunta": "Ya no quiero seguir teletrabajando, ¿puedo volver a la oficina?",
-        "recuperado": false,
-        "rango": null,
-        "top1": "teletrabajo:Preámbulo",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "acierta": false
-      },
-      {
-        "id": "teletrabajo-acuerdo",
-        "pregunta": "¿Hay que firmar algún papel antes de empezar a teletrabajar?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "teletrabajo:Artículo 6. Obligaciones formales del acuerdo de trabajo a distancia",
-        "respuesta": "Sí. El acuerdo de trabajo a distancia debe realizarse por escrito y formalizarse **antes de que se inicie el trabajo a distancia** [1].",
-        "acierta": true
-      },
-      {
-        "id": "teletrabajo-fichar",
-        "pregunta": "¿Tengo que fichar si trabajo desde casa?",
-        "recuperado": false,
-        "rango": null,
-        "top1": "teletrabajo:Artículo 6. Obligaciones formales del acuerdo de trabajo a distancia",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "acierta": false
-      },
-      {
-        "id": "teletrabajo-control",
-        "pregunta": "¿Puede la empresa vigilar lo que hago en el ordenador mientras teletrabajo?",
-        "recuperado": true,
-        "rango": 2,
-        "top1": "teletrabajo:Artículo 18. Derecho a la desconexión digital",
-        "respuesta": "Sí. Según el Artículo 22 de la Ley de Trabajo a Distancia, la empresa puede adoptar las medidas que estime oportunas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales, incluida la utilización de medios telemáticos, siempre que se respeten la dignidad del trabajador y sus circunstancias personales [2].",
-        "acierta": true
-      },
-      {
-        "id": "fuera-iva",
-        "pregunta": "¿Cuál es el tipo general del IVA en España?",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "abstiene": true
-      },
-      {
-        "id": "fuera-smi-importe",
-        "pregunta": "¿De cuántos euros al mes es el salario mínimo interprofesional este año?",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "abstiene": true
-      },
-      {
-        "id": "iva-acotado",
-        "pregunta": "¿Cuál es el tipo del IVA?",
-        "recuperado": true,
-        "rango": 1,
-        "top1": "teletrabajo:Disposición adicional séptima. Tipo impositivo aplicable del Impuesto sobre el Valor Añadido a las entregas, importaciones y adquisiciones intracomunitarias de bienes necesarios para combatir los efectos del COVID-19",
-        "respuesta": "El tipo del IVA es del 0 % para las entregas, importaciones y adquisiciones intracomunitarias de bienes referidos en el Anexo de esta Ley cuyos destinatarios sean entidades de Derecho Público, clínicas o centros hospitalarios, o entidades privadas de carácter social. [1]",
-        "acierta": false
-      },
-      {
-        "id": "fuera-jubilacion",
-        "pregunta": "¿Cuántos años hay que cotizar para cobrar el 100% de la pensión de jubilación?",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "abstiene": true
-      },
-      {
-        "id": "fuera-paro",
-        "pregunta": "¿Cómo se solicita la prestación por desempleo en el SEPE?",
-        "respuesta": "No encuentro esa información en los documentos.",
-        "abstiene": true
-      }
-    ]
-  }
+ {
+  "resumen": {
+   "modelo": "intfloat/multilingual-e5-large",
+   "modo": "semantic",
+   "reescritura": true,
+   "k": 3,
+   "n_en_corpus": 20,
+   "n_fuera_corpus": 4,
+   "recall@3": 0.9,
+   "mrr": 0.742,
+   "segundos": 530.0,
+   "acierto_respuesta": 0.85,
+   "abstencion_correcta": 1.0,
+   "generadores": [
+    "openai/gpt-oss-20b"
+   ]
+  },
+  "detalle": [
+   {
+    "id": "horas-extra",
+    "pregunta": "¿Cuántas horas extra puedo hacer como máximo al año?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 35. Horas extraordinarias",
+    "respuesta": "El máximo de horas extraordinarias que puedes realizar al año es de **80 horas** [1]. Esta cifra puede variar si se aplica la excepción prevista en el apartado 3 del mismo artículo.",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "jornada-maxima",
+    "pregunta": "¿Cuál es la jornada máxima de trabajo a la semana?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 34. Jornada",
+    "respuesta": "La jornada máxima ordinaria de trabajo es de cuarenta horas semanales de trabajo efectivo, calculadas en promedio anual. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "vacaciones",
+    "pregunta": "¿Cuántos días de vacaciones me corresponden al año como mínimo?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 38. Vacaciones anuales",
+    "respuesta": "El Estatuto establece que la duración mínima de las vacaciones anuales retribuidas no puede ser inferior a treinta días naturales. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "descanso-entre-jornadas",
+    "pregunta": "Si acabo un turno muy tarde, ¿cuánto tiempo tiene que pasar hasta que empiece el siguiente?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 34. Jornada",
+    "respuesta": "Entre el final de una jornada y el comienzo de la siguiente deben mediar, como mínimo, doce horas. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "descanso-semanal",
+    "pregunta": "¿Cuánto descanso seguido me toca cada semana?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 37. Descanso semanal, fiestas y permisos",
+    "respuesta": "Un descanso mínimo semanal de día y medio ininterrumpido, que normalmente comprende la tarde del sábado, la mañana del lunes y el día completo del domingo. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "despido-improcedente",
+    "pregunta": "Si me echan y el despido se declara improcedente, ¿cuánto me tienen que pagar por año trabajado?",
+    "recuperado": true,
+    "rango": 2,
+    "top1": "et:Disposición transitoria undécima. Indemnizaciones por despido improcedente",
+    "respuesta": "La indemnización por despido improcedente es equivalente a **treinta y tres días de salario por cada año de servicio** (prorrateado por meses cuando el periodo sea inferior a un año), con un máximo de **veinticuatro mensualidades** [2].",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "despido-objetivo",
+    "pregunta": "¿Qué indemnización corresponde en un despido por causas objetivas?",
+    "recuperado": true,
+    "rango": 2,
+    "top1": "et:Disposición transitoria undécima. Indemnizaciones por despido improcedente",
+    "respuesta": "En un despido por causas objetivas procedente, el trabajador tiene derecho a la indemnización prevista en el apartado 1 del artículo 53 del Estatuto de los Trabajadores. [2]",
+    "acierta": false,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "edad-minima",
+    "pregunta": "¿A partir de qué edad se puede empezar a trabajar?",
+    "recuperado": true,
+    "rango": 2,
+    "top1": "et:Artículo 7. Capacidad para contratar",
+    "respuesta": "Se puede empezar a trabajar a partir de los 16 años, siempre que se cumplan las condiciones de consentimiento y autorización establecidas. [2] [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "lactancia",
+    "pregunta": "Acabo de ser madre, ¿qué permiso tengo para dar el pecho y hasta cuándo?",
+    "recuperado": true,
+    "rango": 3,
+    "top1": "et:Disposición adicional vigesimosegunda. Permisos de nacimiento, adopción, del progenitor diferente de la madre biológica y lactancia del personal laboral al servicio de las Administraciones públicas",
+    "respuesta": "Tienes derecho a una hora de ausencia del trabajo por día para cuidar del lactante, que puedes dividir en dos fracciones, hasta que el niño cumpla **nueve meses**. Si ambos progenitores ejercen este derecho, el periodo puede extenderse hasta **doce meses**, con reducción proporcional del salario a partir de los nueve meses. [3]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "trabajo-nocturno",
+    "pregunta": "¿Qué horas cuentan como trabajo nocturno?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 36. Trabajo nocturno, trabajo a turnos y ritmo de trabajo",
+    "respuesta": "El trabajo nocturno se define como el realizado entre las diez de la noche y las seis de la mañana. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "periodo-prueba",
+    "pregunta": "¿Cuánto puede durar el periodo de prueba en un contrato?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 14. Periodo de prueba",
+    "respuesta": "El periodo de prueba no puede superar:\n\n- 6 meses para técnicos titulados,  \n- 2 meses para los demás trabajadores,  \n- 3 meses para trabajadores no técnicos en empresas con menos de 25 empleados,  \n- 1 mes en contratos temporales de duración determinada de hasta 6 meses, salvo convenio que disponga otra cosa. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "traslado",
+    "pregunta": "¿Puede la empresa mandarme a trabajar a otra ciudad y obligarme a mudarme?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 40. Movilidad geográfica",
+    "respuesta": "Sí. Según el Estatuto de los Trabajadores, la empresa puede trasladarte a otro centro de trabajo que exija mudanza siempre que existan razones económicas, técnicas, organizativas o de producción que lo justifiquen y se te notifique con al menos treinta días de antelación. Además, tienes derecho a optar entre aceptar el traslado (con compensación por gastos) o a la extinción del contrato con indemnización [1].",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "bajar-sueldo",
+    "pregunta": "¿Puede mi empresa bajarme el sueldo o cambiarme el horario sin mi permiso?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 41. Modificaciones sustanciales de condiciones de trabajo",
+    "respuesta": "Sí. Según el Estatuto de los Trabajadores, la empresa puede acordar modificaciones sustanciales de las condiciones de trabajo, entre ellas el salario y el horario, cuando existan razones económicas, técnicas, organizativas o de producción [1]. La modificación individual debe notificarse al trabajador con al menos quince días de antelación, y si la empresa la realiza sin el consentimiento del trabajador, éste puede rescindir el contrato y percibir una indemnización de veinte días de salario por año de servicio prorrateada por el número de años de servicio [1].",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "teletrabajo-gastos",
+    "pregunta": "Trabajo desde casa, ¿quién paga el ordenador y la luz?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "teletrabajo:Artículo 12. El derecho al abono y compensación de gastos",
+    "respuesta": "El trabajo a distancia debe ser sufragado o compensado por la empresa, de modo que la persona no asuma gastos de equipos, herramientas y medios vinculados a su actividad laboral [1]. Además, la empresa debe dotar y mantener los medios, equipos y herramientas necesarios, incluido el ordenador, para el teletrabajo [2]. En cuanto a la luz, la normativa no menciona explícitamente la cobertura de los costes de energía eléctrica.",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "teletrabajo-regular",
+    "pregunta": "¿Cuántos días desde casa hacen falta para que cuente legalmente como trabajo a distancia?",
+    "recuperado": true,
+    "rango": 2,
+    "top1": "teletrabajo:Disposición transitoria primera. Situaciones de trabajo a distancia existentes a la entrada en vigor de esta Ley",
+    "respuesta": "Se considera trabajo a distancia cuando, en un periodo de referencia de tres meses, se presta al menos el 30 % de la jornada. [2]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "teletrabajo-volver",
+    "pregunta": "Ya no quiero seguir teletrabajando, ¿puedo volver a la oficina?",
+    "recuperado": false,
+    "rango": null,
+    "top1": "teletrabajo:Preámbulo",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "acierta": false,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "teletrabajo-acuerdo",
+    "pregunta": "¿Hay que firmar algún papel antes de empezar a teletrabajar?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "teletrabajo:Artículo 6. Obligaciones formales del acuerdo de trabajo a distancia",
+    "respuesta": "Sí. El acuerdo de trabajo a distancia debe formalizarse por escrito antes de que comience el teletrabajo, ya sea incorporado al contrato inicial o firmado en un momento posterior. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "teletrabajo-fichar",
+    "pregunta": "¿Tengo que fichar si trabajo desde casa?",
+    "recuperado": false,
+    "rango": null,
+    "top1": "teletrabajo:Artículo 6. Obligaciones formales del acuerdo de trabajo a distancia",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "acierta": false,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "teletrabajo-control",
+    "pregunta": "¿Puede la empresa vigilar lo que hago en el ordenador mientras teletrabajo?",
+    "recuperado": true,
+    "rango": 2,
+    "top1": "teletrabajo:Artículo 18. Derecho a la desconexión digital",
+    "respuesta": "Sí. La Ley de Trabajo a Distancia permite que la empresa adopte las medidas que estime oportunas de vigilancia y control para verificar el cumplimiento de las obligaciones laborales, incluida la utilización de medios telemáticos, siempre que se respeten la dignidad del trabajador y sus circunstancias personales, como la discapacidad. [2]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fuera-iva",
+    "pregunta": "¿Cuál es el tipo general del IVA en España?",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "abstiene": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fuera-smi-importe",
+    "pregunta": "¿De cuántos euros al mes es el salario mínimo interprofesional este año?",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "abstiene": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "iva-acotado",
+    "pregunta": "¿Cuál es el tipo del IVA?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "teletrabajo:Disposición adicional séptima. Tipo impositivo aplicable del Impuesto sobre el Valor Añadido a las entregas, importaciones y adquisiciones intracomunitarias de bienes necesarios para combatir los efectos del COVID-19",
+    "respuesta": "El tipo del IVA es del 0 % para las entregas, importaciones y adquisiciones intracomunitarias de bienes necesarios para combatir los efectos del COVID‑19. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fuera-jubilacion",
+    "pregunta": "¿Cuántos años hay que cotizar para cobrar el 100% de la pensión de jubilación?",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "abstiene": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fuera-paro",
+    "pregunta": "¿Cómo se solicita la prestación por desempleo en el SEPE?",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "abstiene": true,
+    "generador": "openai/gpt-oss-20b"
+   }
+  ]
+ }
 ]

@@ -95,7 +95,7 @@ completo + gpt-oss-20b), fichero [eval-resultados-k3.json](eval-resultados-k3.js
 |---|---|
 | recall@3 | 0,90 |
 | MRR | 0,74 |
-| Respuestas con el dato correcto | 0,70 |
+| Respuestas con el dato correcto | 0,85 |
 | Abstenciones correctas (preguntas fuera del corpus) | 4/4 |
 
 **Bajar de `k=5` a `k=3` no costó recuperación**: recall@5 0,895 sobre las 19
@@ -117,18 +117,45 @@ los otros dos fragmentos solo engordaban el contexto.
 > `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el mismo texto siempre,
 > así que una pregunta de 20 —5 puntos— puede cambiar de tanda a tanda.
 >
-> El criterio de acierto sigue siendo tosco y se lleva por delante al menos una
-> pregunta buena: en `teletrabajo-gastos` la respuesta **trae el dato correcto**
-> (los equipos los paga la empresa) *y encima* avisa de que el texto no dice
-> quién paga la luz — y esa frase de aviso se cuenta como abstención total.
+**El acierto fue 0,70 hasta el 12/08 y lo subió el prompt, no el modelo.** Las
+tres primeras reglas del `SYSTEM` eran prohibiciones seguidas («si no está, di
+que no lo encuentras», dos veces más) y un modelo de 20B las sobreaplicaba:
+abstenía con el dato delante. Reescrito como procedimiento —recorre los
+fragmentos, y solo después ríndete—, y permitiendo responder a la parte que sí
+está en vez de tirar la respuesta entera, el acierto pasa de **0,70 a 0,85 con el
+mismo modelo, el mismo índice y la misma recuperación**, y las abstenciones
+siguen en 4/4. De los 6 fallos arregla 3:
 
-De los 6 fallos, 2 son de recuperación (`teletrabajo-volver`,
-`teletrabajo-fichar`) y el resto del generador: encontró el artículo correcto y
-aun así dijo que no lo encontraba. Con `llama-3.3-70b` esos casos salían bien en
-una prueba a mano —**tanda no conservada, así que ese número no está en el repo
-y no lo doy**—, pero gasta la cuota diaria de la cuenta mucho antes, así que la
-demo pública va con el modelo pequeño. Es el intercambio real: acierto a cambio
-de que la demo siga en pie por la tarde.
+| Fallo | Antes | Después |
+|---|---|---|
+| `teletrabajo-regular` | «No encuentro esa información» con el dato delante | responde |
+| `teletrabajo-gastos` | daba el dato bueno *y encima* soltaba la frase de abstención por la parte que el texto no cubre, lo que anulaba la respuesta entera | responde la parte que sí está y dice de cuál no habla |
+| `iva-acotado` | «el tipo del IVA es 0 %», sin más | «0 % **para los bienes necesarios para combatir los efectos del COVID-19**» |
+
+Con matices, que importan más que el número:
+
+- **El prompt se escribió mirando estos mismos fallos**, así que el 0,85 está
+  inflado por construcción. Para comprobarlo se escribieron **12 preguntas
+  nuevas** sobre artículos que no habían participado en el diagnóstico… y **no
+  discriminan**: el prompt viejo ya saca 10/10 en ellas. Lo que sí prueban es que
+  soltar la mano en la abstención no hizo inventar nada — 2 trampas nuevas de 2,
+  6 de 6 contando las de siempre. Ese era el riesgo real de tocar el prompt.
+- **`iva-acotado` queda a medias.** Ahora acota el supuesto, pero sigue sin decir
+  hasta cuándo estuvo vigente (31/10/2020), que es lo que pide la regla.
+
+Los 3 fallos que quedan: 2 son de recuperación (`teletrabajo-volver`,
+`teletrabajo-fichar`) y el tercero, `despido-objetivo`, es de ventana — el
+artículo 53 ocupa 5.481 caracteres y el recorte de 2.500 se centra en el trozo
+que casó, dejando fuera «veinte días de salario por año de servicio». Mandar
+además la cabecera del artículo lo arregla y sube el acierto a 0,90, pero cuesta
+un **20 % más de contexto en todas las consultas** para ganar **1 pregunta de
+18**, y aquí el cuello de botella es la cuota: por eso no está aplicado.
+
+Con `llama-3.3-70b` los casos del generador salían bien en una prueba a mano
+—**tanda no conservada, así que ese número no está en el repo y no lo doy**—,
+pero gasta la cuota diaria de la cuenta mucho antes, así que la demo pública va
+con el modelo pequeño. Es el intercambio real: acierto a cambio de que la demo
+siga en pie por la tarde.
 
 Reproducible:
 
@@ -159,12 +186,17 @@ Reproducible:
   tortilla?», 0,75) queda por debajo. Lo que sí funciona contra las respuestas
   inventadas es la instrucción explícita de abstenerse, medida con preguntas
   trampa: 4 de 4.
-- **Un caso que sigue abierto.** A «¿cuál es el tipo del IVA?» responde «0 %», y
-  no es una alucinación: la Ley 10/2021 lleva una disposición con IVA cero para
-  material COVID hasta el 31/10/2020. Está recuperando bien y contestando de
-  más, sin acotar el supuesto. Añadir una regla al prompt no lo arregló con el
-  modelo pequeño; el de 120B sí matiza («en el supuesto regulado»). Queda como
-  caso `iva-acotado` en el conjunto de evaluación.
+- **Un caso a medio cerrar.** A «¿cuál es el tipo del IVA?» respondía «0 %», y no
+  era una alucinación: la Ley 10/2021 lleva una disposición con IVA cero para
+  material COVID hasta el 31/10/2020. Recuperaba bien y contestaba de más, sin
+  acotar el supuesto. Una primera regla en el prompt no lo arregló; **sí lo hace
+  la del 12/08**, que en vez de pedir «acota el supuesto» nombra el mecanismo
+  —«si el fragmento es una disposición adicional o transitoria, di para qué
+  supuesto se aprobó, desde cuándo y hasta cuándo»—: ahora contesta «0 % para los
+  bienes necesarios para combatir los efectos del COVID-19». **Sigue sin dar la
+  fecha de caducidad**, así que el caso `iva-acotado` se queda en el conjunto de
+  evaluación. La lección: al modelo pequeño hay que decirle qué mirar, no lo que
+  no debe hacer.
 
 ## Uso
 
