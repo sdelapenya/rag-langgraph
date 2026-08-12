@@ -104,7 +104,7 @@ artículo correcto, cuando se encuentra, está siempre entre los tres primeros �
 los otros dos fragmentos solo engordaban el contexto.
 
 > **Este README dijo 0,79 hasta el 11/08, y era un número mal copiado.** El 0,79
-> (0,789) sale de [eval-resultados.json](eval-resultados.json), que es la tanda
+> (0,789) sale de [eval-resultados-k5-historico.json](eval-resultados-k5-historico.json), que es la tanda
 > con **`k=5` y 19 preguntas**; el fichero que esta tabla cita, con la
 > configuración que de verdad se publica, dice 0,70 desde el principio. No fue
 > el modelo bailando: fue la celda de una tabla tomada de la ejecución
@@ -135,11 +135,16 @@ siguen en 4/4. De los 6 fallos arregla 3:
 Con matices, que importan más que el número:
 
 - **El prompt se escribió mirando estos mismos fallos**, así que el 0,85 está
-  inflado por construcción. Para comprobarlo se escribieron **12 preguntas
-  nuevas** sobre artículos que no habían participado en el diagnóstico… y **no
-  discriminan**: el prompt viejo ya saca 10/10 en ellas. Lo que sí prueban es que
-  soltar la mano en la abstención no hizo inventar nada — 2 trampas nuevas de 2,
-  6 de 6 contando las de siempre. Ese era el riesgo real de tocar el prompt.
+  inflado por construcción. Para comprobarlo hay un segundo conjunto,
+  [eval-preguntas-holdout.json](eval-preguntas-holdout.json): **12 preguntas
+  escritas después**, sobre artículos que no participaron en el diagnóstico… y
+  **no discriminan**. El prompt viejo ya saca 10/10 en ellas
+  ([eval-resultados-holdout.json](eval-resultados-holdout.json)), así que solo
+  permiten decir «no empeora», no «generaliza». Se publica el conjunto igualmente:
+  un *held-out* que sale plano es un resultado, no un borrador.
+  Lo que sí prueban es que soltar la mano en la abstención no hizo inventar nada
+  — 2 trampas nuevas de 2, **6 de 6** contando las de siempre. Ese era el riesgo
+  real de tocar el prompt.
 - **`iva-acotado` queda a medias.** Ahora acota el supuesto, pero sigue sin decir
   hasta cuándo estuvo vigente (31/10/2020), que es lo que pide la regla.
 
@@ -162,6 +167,18 @@ Reproducible:
 ```bash
 .venv/bin/python3 evaluate.py --solo-recuperacion --comparar   # sin coste de API
 .venv/bin/python3 evaluate.py --model e5 --mode semantic --expandir -v
+
+# ¿le llega la respuesta al generador? Sin LLM, determinista y gratis:
+RAG_MODEL=e5 .venv/bin/python3 tools/contexto_contiene.py
+```
+
+Ese último separa dos fallos que el acierto mezcla —que el sistema no le mande la
+respuesta al modelo, y que se la mande y aun así falle— y es lo que decidió no
+aplicar la cabecera del artículo:
+
+```
+sin cabecera     | oficial: 17/18 llegan, contexto +0 %  (falla despido-objetivo)
+cabecera entera  | oficial: 18/18 llegan, contexto +25 %
 ```
 
 ### Lo que salió al revés
@@ -197,6 +214,26 @@ Reproducible:
   fecha de caducidad**, así que el caso `iva-acotado` se queda en el conjunto de
   evaluación. La lección: al modelo pequeño hay que decirle qué mirar, no lo que
   no debe hacer.
+
+## Qué hay en el repo
+
+| | Qué es |
+|---|---|
+| `rag.py`, `store.py`, `chunking.py`, `ingest.py` | el sistema: troceado, índice, búsqueda y generación |
+| `app.py`, `deploy/` | la demo web (Flask + gunicorn) y su unidad de systemd |
+| `grafo/` | el mismo RAG como grafo de LangGraph, con su propio README y su evaluación |
+| `tools/contexto_contiene.py` | diagnóstico **sin LLM**: ¿le llega la respuesta al generador? |
+| `tests/` | 38 pruebas, sin red y sin claves |
+| `eval-preguntas.json` | las 24 preguntas de evaluación (20 con respuesta + 4 trampa) |
+| `eval-preguntas-holdout.json` | las 12 escritas después, para validar fuera de muestra |
+| `eval-reescrituras*.json` | caché de las reescrituras de consulta: evita repetir llamadas y quita ruido al comparar |
+| `eval-resultados-k3.json` | **los números que publica este README** (`k=3`, 24 preguntas) |
+| `eval-resultados-holdout.json` | los del conjunto de validación |
+| `eval-resultados-k5-historico.json` | tanda vieja de `k=5` con 19 preguntas. **No es la configuración publicada**: se conserva porque es el origen del «0,79» que este README dio por bueno hasta el 11/08 |
+
+Los JSON de resultados guardan, por pregunta, qué modelo la respondió. No es
+decorativo: una tanda entera llegó a salir 10/10 contestada por el modelo de
+respaldo, con la cuota del principal agotada y sin que nada lo dijera.
 
 ## Uso
 

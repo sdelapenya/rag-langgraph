@@ -1,0 +1,133 @@
+{
+  "_nota": "Segundo conjunto de evaluacion, escrito el 12/08/2026 DESPUES de ajustar el prompt del generador y a proposito sobre articulos que no participaron en el diagnostico de los fallos. Sirve para ver si la mejora del prompt generaliza. Resultado: NO discrimina, el prompt viejo y el nuevo sacan 10/10 -- ver README. Cada respuesta_contiene esta copiada del texto real del indice, no de memoria.",
+  "preguntas": [
+    {
+      "id": "pacto-no-competencia",
+      "pregunta": "Si firmo un pacto de no competencia para cuando me vaya de la empresa, ¿cuánto tiempo como máximo puede durar?",
+      "secciones": [
+        "et:Artículo 21."
+      ],
+      "respuesta_contiene": [
+        "dos años",
+        "2 años"
+      ]
+    },
+    {
+      "id": "permiso-formacion",
+      "pregunta": "Llevo dos años en la empresa, ¿cuántas horas de formación retribuidas al año me corresponden?",
+      "secciones": [
+        "et:Artículo 23."
+      ],
+      "respuesta_contiene": [
+        "veinte horas",
+        "20 horas"
+      ]
+    },
+    {
+      "id": "interes-mora",
+      "pregunta": "Si la empresa me paga el sueldo con retraso, ¿qué interés por mora tiene que pagarme?",
+      "secciones": [
+        "et:Artículo 29."
+      ],
+      "respuesta_contiene": [
+        "diez por ciento",
+        "10 por ciento",
+        "10%",
+        "10 %"
+      ]
+    },
+    {
+      "id": "prescripcion-falta-leve",
+      "pregunta": "¿En cuánto tiempo prescribe una falta leve cometida por un trabajador?",
+      "secciones": [
+        "et:Artículo 60."
+      ],
+      "respuesta_contiene": [
+        "diez dias",
+        "diez días",
+        "10 dias",
+        "10 días"
+      ]
+    },
+    {
+      "id": "credito-horas-comite",
+      "pregunta": "En una empresa de 300 trabajadores, ¿de cuántas horas mensuales dispone cada miembro del comité de empresa para su labor de representación?",
+      "secciones": [
+        "et:Artículo 68."
+      ],
+      "respuesta_contiene": [
+        "treinta horas",
+        "30 horas"
+      ]
+    },
+    {
+      "id": "contrato-produccion",
+      "pregunta": "¿Cuánto puede durar como máximo un contrato temporal por circunstancias de la producción?",
+      "secciones": [
+        "et:Artículo 15."
+      ],
+      "respuesta_contiene": [
+        "seis meses",
+        "6 meses"
+      ]
+    },
+    {
+      "id": "indemnizacion-fin-temporal",
+      "pregunta": "Cuando se me termine el contrato temporal, ¿cuántos días de salario por año trabajado me tienen que indemnizar?",
+      "secciones": [
+        "et:Artículo 49."
+      ],
+      "respuesta_contiene": [
+        "doce dias",
+        "doce días",
+        "12 dias",
+        "12 días"
+      ]
+    },
+    {
+      "id": "fiestas-anuales",
+      "pregunta": "¿Cuántos días festivos retribuidos hay al año como máximo?",
+      "secciones": [
+        "et:Artículo 37."
+      ],
+      "respuesta_contiene": [
+        "catorce",
+        "14"
+      ]
+    },
+    {
+      "id": "fogasa-limite",
+      "pregunta": "Si mi empresa quiebra y me debe salarios, ¿de cuántos días como máximo responde el Fondo de Garantía Salarial?",
+      "secciones": [
+        "et:Artículo 33."
+      ],
+      "respuesta_contiene": [
+        "ciento veinte",
+        "120"
+      ]
+    },
+    {
+      "id": "copia-acuerdo-teletrabajo",
+      "pregunta": "¿En qué plazo tiene que entregar la empresa una copia del acuerdo de teletrabajo a la representación legal de los trabajadores?",
+      "secciones": [
+        "teletrabajo:Artículo 6."
+      ],
+      "respuesta_contiene": [
+        "diez dias",
+        "diez días",
+        "10 dias",
+        "10 días"
+      ]
+    },
+    {
+      "id": "fuera-irpf-retencion",
+      "pregunta": "¿Qué porcentaje de IRPF me retienen de la nómina si cobro 25.000 euros al año?",
+      "abstenerse": true
+    },
+    {
+      "id": "fuera-baja-it",
+      "pregunta": "Estando de baja por enfermedad común, ¿qué porcentaje de la base reguladora cobro los primeros días?",
+      "abstenerse": true
+    }
+  ]
+}
