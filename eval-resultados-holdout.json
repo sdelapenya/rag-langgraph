@@ -1,0 +1,136 @@
+[
+ {
+  "resumen": {
+   "modelo": "intfloat/multilingual-e5-large",
+   "modo": "semantic",
+   "reescritura": true,
+   "k": 3,
+   "n_en_corpus": 10,
+   "n_fuera_corpus": 2,
+   "recall@3": 0.9,
+   "mrr": 0.85,
+   "segundos": 254.2,
+   "acierto_respuesta": 1.0,
+   "abstencion_correcta": 1.0,
+   "generadores": [
+    "openai/gpt-oss-20b"
+   ]
+  },
+  "detalle": [
+   {
+    "id": "pacto-no-competencia",
+    "pregunta": "Si firmo un pacto de no competencia para cuando me vaya de la empresa, ¿cuánto tiempo como máximo puede durar?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 21. Pacto de no concurrencia y de permanencia en la empresa",
+    "respuesta": "El pacto de no competencia no podrá superar los 2 años si el trabajador es técnico, y los 6 meses en caso contrario. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "permiso-formacion",
+    "pregunta": "Llevo dos años en la empresa, ¿cuántas horas de formación retribuidas al año me corresponden?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 23. Promoción y formación profesional en el trabajo",
+    "respuesta": "Tienes derecho a un permiso retribuido de veinte horas anuales de formación profesional para el empleo. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "interes-mora",
+    "pregunta": "Si la empresa me paga el sueldo con retraso, ¿qué interés por mora tiene que pagarme?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 29. Liquidación y pago",
+    "respuesta": "El interés por mora en el pago del salario será el diez por ciento de lo adeudado. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "prescripcion-falta-leve",
+    "pregunta": "¿En cuánto tiempo prescribe una falta leve cometida por un trabajador?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 60. Prescripción",
+    "respuesta": "Una falta leve cometida por un trabajador prescribe a los diez días desde que la empresa tuvo conocimiento de su comisión, y, en cualquier caso, a los seis meses de haberse cometido. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "credito-horas-comite",
+    "pregunta": "En una empresa de 300 trabajadores, ¿de cuántas horas mensuales dispone cada miembro del comité de empresa para su labor de representación?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 68. Garantías",
+    "respuesta": "En una empresa con 300 trabajadores, cada miembro del comité de empresa dispone de **30 horas mensuales retribuidas** para el ejercicio de sus funciones de representación. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "contrato-produccion",
+    "pregunta": "¿Cuánto puede durar como máximo un contrato temporal por circunstancias de la producción?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 15. Duración del contrato de trabajo",
+    "respuesta": "El contrato temporal por circunstancias de la producción no puede superar los seis meses, salvo que el convenio colectivo sectorial establezca una extensión hasta un año. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "indemnizacion-fin-temporal",
+    "pregunta": "Cuando se me termine el contrato temporal, ¿cuántos días de salario por año trabajado me tienen que indemnizar?",
+    "recuperado": false,
+    "rango": null,
+    "top1": "et:Disposición transitoria octava. Indemnización por finalización de contrato temporal",
+    "respuesta": "Para la indemnización por finalización de un contrato temporal, la normativa transitoria octava establece:\n\n- 8 días de salario por año de servicio para contratos celebrados hasta el 31 de diciembre de 2011.  \n- 9 días por año a partir del 1 de enero de 2012.  \n- 10 días por año a partir del 1 de enero de 2013.  \n- 11 días por año a partir del 1 de enero de 2014.  \n- 12 días por año a partir del 1 de enero de 2015.  \n\nEsta disposición se aplica a los contratos temporales celebrados en esas fechas y no se aplica a los contratos firmados antes del 4 de marzo de 2001. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fiestas-anuales",
+    "pregunta": "¿Cuántos días festivos retribuidos hay al año como máximo?",
+    "recuperado": true,
+    "rango": 2,
+    "top1": "et:Artículo 38. Vacaciones anuales",
+    "respuesta": "Hay un máximo de catorce días festivos retribuidos al año. [2]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fogasa-limite",
+    "pregunta": "Si mi empresa quiebra y me debe salarios, ¿de cuántos días como máximo responde el Fondo de Garantía Salarial?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "et:Artículo 33. El Fondo de Garantía Salarial",
+    "respuesta": "El Fondo de Garantía Salarial abona salarios pendientes hasta un máximo de **120 días** de salario. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "copia-acuerdo-teletrabajo",
+    "pregunta": "¿En qué plazo tiene que entregar la empresa una copia del acuerdo de teletrabajo a la representación legal de los trabajadores?",
+    "recuperado": true,
+    "rango": 1,
+    "top1": "teletrabajo:Artículo 6. Obligaciones formales del acuerdo de trabajo a distancia",
+    "respuesta": "La empresa debe entregar la copia del acuerdo de teletrabajo a la representación legal de los trabajadores en un plazo no superior a diez días desde su formalización. [1]",
+    "acierta": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fuera-irpf-retencion",
+    "pregunta": "¿Qué porcentaje de IRPF me retienen de la nómina si cobro 25.000 euros al año?",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "abstiene": true,
+    "generador": "openai/gpt-oss-20b"
+   },
+   {
+    "id": "fuera-baja-it",
+    "pregunta": "Estando de baja por enfermedad común, ¿qué porcentaje de la base reguladora cobro los primeros días?",
+    "respuesta": "No encuentro esa información en los documentos.",
+    "abstiene": true,
+    "generador": "openai/gpt-oss-20b"
+   }
+  ]
+ }
+]
