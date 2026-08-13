@@ -373,3 +373,8 @@ linter y los tests, y comprueba que la imagen de Docker construye.
   > ⚠️ El plan gratuito de Gemini **entrena con lo que se le envía**. Aquí da
   > igual (el corpus es BOE, texto público). Para documentos de cliente, ni el
   > respaldo ni nada: plan de pago con el tratamiento de datos por escrito.
+
+## Licencia
+
+Código bajo **MIT** (ver [`LICENSE`](LICENSE)). Los PDF del BOE de `corpus/` no
+son titularidad de este proyecto: ver [`corpus/README.md`](corpus/README.md).
