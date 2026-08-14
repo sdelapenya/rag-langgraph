@@ -33,7 +33,35 @@ log = logging.getLogger(__name__)
 # para una demo en la que alguien escribe y espera; llama-3.3-70b va igual de
 # rápido y acierta un poco más, pero agota antes la cuota diaria de la cuenta.
 MODEL_LLM = os.getenv("RAG_LLM", "openai/gpt-oss-20b")
-MODEL_REESCRITURA = os.getenv("RAG_LLM_QUERY", "llama-3.1-8b-instant")
+
+# La reescritura iba con llama-3.1-8b-instant hasta que Groq lo retiró el
+# 16/08/2026. Los modelos que razonan (gpt-oss, qwen) se gastarían pensando los
+# max_tokens=80 de esta llamada y devolverían vacío, así que hay que acotarles
+# el razonamiento; llama-3.3-70b no razona y entra sin tocar nada.
+#
+# Medido con evaluate.py (4 pasadas, mismo índice, modo y k):
+#   llama-3.1-8b-instant  recall@3 0,90  MRR 0,742   (retirado)
+#   llama-3.3-70b         recall@3 0,85  MRR 0,708
+#   qwen3.6-27b + none    recall@3 0,90  MRR 0,775   <- el que se usa
+#
+# El 70B perdía recall por una razón concreta: se tragaba los ejemplos del
+# prompt de abajo y se los pegaba a preguntas que no iban de eso ("¿a qué edad
+# se puede trabajar?" acababa preguntando por el registro de jornada). Retocar
+# el prompt para evitarlo arreglaba unas preguntas y rompía otras; con Qwen el
+# prompt original ya sale limpio, va más rápido (0,24 s de mediana) y las cuatro
+# pasadas dieron lo mismo, frente al 0,85/0,85/0,80/0,85 del 70B.
+MODEL_REESCRITURA = os.getenv("RAG_LLM_QUERY", "qwen/qwen3.6-27b")
+
+# Solo se manda si el modelo de reescritura razona; para el resto, la API
+# rechaza el parámetro. Qwen admite "none", que lo desactiva del todo; la
+# familia gpt-oss no, y con "low" todavía piensa lo justo para no caber en 80
+# tokens — por eso no es el reescritor.
+if MODEL_REESCRITURA.startswith("qwen/"):
+    REESCRITURA_RAZONA = "none"
+elif MODEL_REESCRITURA.startswith("openai/gpt-oss"):
+    REESCRITURA_RAZONA = "low"
+else:
+    REESCRITURA_RAZONA = None
 
 # Respaldo cuando Groq agota la cuota diaria: el plan gratis de Gemini cuenta
 # peticiones al día (1.000), no tokens, así que aguanta un orden de magnitud
@@ -103,15 +131,22 @@ REINTENTOS = int(os.getenv("RAG_REINTENTOS", "4"))
 
 
 def _llamar_groq(api_key: str, model: str, system: str, user: str,
-                 temperature: float, max_tokens: int) -> str:
+                 temperature: float, max_tokens: int,
+                 reasoning_effort: str | None = None) -> str:
     """
     Llama a Groq reintentando cuando corta por límite de tokens.
 
     El límite por minuto del plan gratuito es de 8K tokens y una pregunta gasta
     unos 2.500: tres seguidas lo agotan. El error trae el tiempo de espera
     sugerido, así que se respeta.
+
+    `reasoning_effort` solo lo aceptan los modelos que razonan (la familia
+    gpt-oss). Sirve para acotar cuánto piensan antes de escribir: con un
+    `max_tokens` corto, sin acotarlo se gastan el presupuesto pensando y
+    devuelven cadena vacía — medido, no supuesto.
     """
     cliente = Groq(api_key=api_key)
+    extra = {"reasoning_effort": reasoning_effort} if reasoning_effort else {}
     for intento in range(REINTENTOS):
         try:
             resp = cliente.chat.completions.create(
@@ -122,6 +157,7 @@ def _llamar_groq(api_key: str, model: str, system: str, user: str,
                 ],
                 temperature=temperature,
                 max_tokens=max_tokens,
+                **extra,
             )
             return resp.choices[0].message.content.strip()
         except RateLimitError as err:
@@ -183,10 +219,12 @@ def _llamar_gemini(system: str, user: str, temperature: float, max_tokens: int) 
 
 
 def _generar(api_key: str, model: str, system: str, user: str,
-             temperature: float, max_tokens: int) -> tuple[str, str]:
+             temperature: float, max_tokens: int,
+             reasoning_effort: str | None = None) -> tuple[str, str]:
     """Devuelve (respuesta, proveedor). Groq primero; Gemini si no queda cuota."""
     try:
-        return _llamar_groq(api_key, model, system, user, temperature, max_tokens), model
+        return _llamar_groq(api_key, model, system, user, temperature, max_tokens,
+                            reasoning_effort), model
     except RateLimitError as err:
         log.warning("Groq sin cuota (%s), pasando a %s", err.__class__.__name__, MODEL_FALLBACK)
         return _llamar_gemini(system, user, temperature, max_tokens), MODEL_FALLBACK
@@ -203,7 +241,8 @@ def expand_query(question: str, api_key: str) -> str:
     """
     try:
         texto, _ = _generar(api_key, MODEL_REESCRITURA, REESCRITURA, question,
-                            temperature=0.0, max_tokens=80)
+                            temperature=0.0, max_tokens=80,
+                            reasoning_effort=REESCRITURA_RAZONA)
         return texto.strip('"')
     except Exception:
         return ""  # si falla, se busca solo con la pregunta original

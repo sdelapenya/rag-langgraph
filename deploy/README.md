@@ -46,7 +46,7 @@ tarda mucho más, seguramente esté descargando el modelo: se cachea en
 
 ## Coste y protección
 
-- Cada pregunta = **2 llamadas** (reescritura con `llama-3.1-8b-instant` +
+- Cada pregunta = **2 llamadas** (reescritura con `qwen/qwen3.6-27b` +
   respuesta con `openai/gpt-oss-20b`, que es lo que fija `RAG_LLM` en el servicio)
   y **~2.100 tokens medidos** desde el 02/08 (antes 4.400: se bajó `RAG_TOP_K` a 3
   y el artículo a 2.500 caracteres, −54 % de contexto sin perder acierto).

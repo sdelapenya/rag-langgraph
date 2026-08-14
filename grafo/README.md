@@ -23,9 +23,9 @@ graph TD;
 
 | Nodo | Qué hace | Coste |
 |------|----------|-------|
-| `recuperar` | reescribe la pregunta al registro del documento y busca en el índice (k=3) | 1 llamada a un modelo pequeño |
-| `evaluar` | ¿estos fragmentos contienen la respuesta? Suelo de similitud + modelo juez | 1 llamada a un modelo pequeño |
-| `generar` | redacta la respuesta citando `[n]` | 1 llamada al modelo grande |
+| `recuperar` | reescribe la pregunta al registro del documento y busca en el índice (k=3) | 1 llamada corta (~30 tokens de salida) |
+| `evaluar` | ¿estos fragmentos contienen la respuesta? Suelo de similitud + modelo juez | 1 llamada corta (un par de tokens) |
+| `generar` | redacta la respuesta citando `[n]` | 1 llamada al generador (~2.100 tokens) |
 | `abstenerse` | cierra con «No encuentro esa información en los documentos.» y el motivo | 0 |
 
 La arista condicional sale de `evaluar`. Ese es el cambio de fondo:
@@ -55,7 +55,7 @@ similitudes y qué modelo respondió:
   ruta        recuperar -> evaluar -> abstenerse
   reescritura ¿Cuál es la tasa general del Impuesto sobre el Valor Añadido en España?
   similitudes [0.8353, 0.8158, 0.8089]  (umbral 0.8)
-  modelos     juez=llama-3.1-8b-instant  respuesta=-
+  modelos     juez=llama-3.3-70b-versatile  respuesta=-
   ahorrado    una llamada a openai/gpt-oss-20b
 ```
 
@@ -126,9 +126,24 @@ transitiva. Aquí hay un `.venv` propio con las mismas versiones de las librerí
 compartidas; el código y el índice del RAG se leen de su sitio, sin copiarlos ni
 modificarlos. El puente son diez líneas: [`puente.py`](puente.py).
 
-**El juez es un modelo pequeño** (`llama-3.1-8b-instant`). Decidir si un texto
-contiene un dato es clasificar, no redactar. Si el filtro costara lo mismo que
-la respuesta, no filtraría nada: solo añadiría latencia.
+**El juez es una llamada barata** (`llama-3.3-70b-versatile`). Decidir si un
+texto contiene un dato es clasificar, no redactar: la salida son un par de
+tokens frente a una respuesta entera, y sale de una cuota distinta a la del
+generador. Si el filtro costara lo mismo que la respuesta, no filtraría nada:
+solo añadiría latencia.
+
+Hasta el 16/08/2026 este papel lo hacía `llama-3.1-8b-instant`, que Groq retiró.
+Era literalmente un modelo pequeño; el relevo no lo es, pero el argumento se
+sostiene igual porque lo que se ahorra son los tokens de redactar.
+
+**El modelo del juez va fijo, no heredado del que reescribe la pregunta** — y
+eso es una cicatriz, no una preferencia. Lo heredaba, y el 14/08/2026 el RAG se
+pasó a `qwen3.6-27b`, que razona y necesita `reasoning_effort="none"` en su
+llamada. El juez habría heredado el modelo pero no el ajuste: con `max_tokens=60`
+habría devuelto el bloque de razonamiento en vez de un veredicto y, como ante un
+veredicto raro este grafo tira hacia adelante a propósito, **habría dejado de
+abstenerse siempre, sin lanzar un solo error**. Un acoplamiento así no lo caza un
+test: se ve en la métrica, semanas después.
 
 **El umbral de similitud es un suelo, no un discriminador — y eso está medido.**
 La idea original era cortar por similitud antes de gastar ni la llamada al juez.

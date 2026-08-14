@@ -46,7 +46,7 @@ algo es lo otro:
 ```
 pregunta del usuario
    │
-   ├─► reescritura al registro legal        (llama-3.1-8b · ~200 ms)
+   ├─► reescritura al registro legal        (qwen3.6-27b · ~240 ms)
    │
    ├─► búsqueda semántica sobre 575 fragmentos
    │      embeddings multilingual-e5-large, ONNX en CPU (~95 ms)
@@ -91,12 +91,44 @@ distingue esos matices; si no, da igual cómo se pregunte.
 **Respuesta** — configuración que se publica (e5-large + reescritura + artículo
 completo + gpt-oss-20b), fichero [eval-resultados-k3.json](eval-resultados-k3.json):
 
-| Métrica | Valor |
-|---|---|
-| recall@3 | 0,90 |
-| MRR | 0,74 |
-| Respuestas con el dato correcto | 0,85 |
-| Abstenciones correctas (preguntas fuera del corpus) | 4/4 |
+| Métrica | Valor | Antes del 14/08 |
+|---|---|---|
+| recall@3 | 0,90 | 0,90 |
+| MRR | 0,78 | 0,74 |
+| Respuestas con el dato correcto | 0,80 | 0,85 |
+| Abstenciones correctas (preguntas fuera del corpus) | 4/4 | 4/4 |
+
+**El 14/08/2026 Groq retiró `llama-3.1-8b-instant`**, que era el modelo que
+reescribía la pregunta antes de buscar. Se probaron los sustitutos vivos con el
+mismo índice, modo y `k`, cuatro pasadas de reescritura cada uno:
+
+| reescritor | recall@3 | MRR |
+|---|---|---|
+| `llama-3.1-8b-instant` (retirado el 16/08) | 0,90 | 0,733 |
+| `llama-3.3-70b-versatile` | 0,85 / 0,85 / 0,80 / 0,85 | 0,708 |
+| **`qwen/qwen3.6-27b` + `reasoning_effort=none`** (el que se usa) | **0,90** ×4 | **0,775** |
+| `openai/gpt-oss-20b` + `reasoning_effort=low` | 0,80 | 0,642 |
+
+Qwen no solo recupera el recall: mejora el MRR por encima del modelo retirado y
+da las cuatro pasadas idénticas, mientras que el 70B oscilaba. **Llama 3.3 70B
+perdía recall por una razón concreta**, no por ser peor modelo: se tragaba los
+ejemplos del prompt de reescritura (`"fichar" -> "registro de jornada"`) y se los
+pegaba a preguntas que no iban de eso — «¿a partir de qué edad se puede
+trabajar?» acababa preguntando también por el registro de jornada. Retocar el
+prompt para evitarlo arreglaba esa pregunta y rompía otra; con Qwen el prompt
+original ya sale limpio.
+
+El sustituto que recomienda Groq, `gpt-oss-20b`, mide peor y además **devuelve
+cadena vacía si no se le acota el razonamiento**: la reescritura va con
+`max_tokens=80` y se los gasta pensando antes de escribir. A Qwen le pasaría lo
+mismo, pero admite `reasoning_effort="none"`, que lo desactiva del todo.
+
+**El acierto se quedó en 0,80, y no por el cambio de modelo.** La pregunta que se
+pierde es `despido-objetivo`, que es el fallo de ventana ya descrito más abajo (el
+artículo 53 no cabe en `RAG_MAX_CHARS` y la cuantía queda fuera del recorte). Con
+el modelo retirado esa pregunta acertaba porque su reescritura hacía casar por
+casualidad el trozo que llevaba el dato, no porque el sistema lo resolviera.
+Repetida tres veces con Qwen falla las tres, así que es el suelo real, no ruido.
 
 **Bajar de `k=5` a `k=3` no costó recuperación**: recall@5 0,895 sobre las 19
 preguntas de aquella tanda, recall@3 0,90 sobre las 20 de ahora, mismo MRR. El
@@ -132,6 +164,12 @@ siguen en 4/4. De los 6 fallos arregla 3:
 | `teletrabajo-gastos` | daba el dato bueno *y encima* soltaba la frase de abstención por la parte que el texto no cubre, lo que anulaba la respuesta entera | responde la parte que sí está y dice de cuál no habla |
 | `iva-acotado` | «el tipo del IVA es 0 %», sin más | «0 % **para los bienes necesarios para combatir los efectos del COVID-19**» |
 
+⚠️ **`iva-acotado` volvió a fallar el 14/08**, en las dos pasadas medidas con el
+reescritor nuevo: contesta «el tipo de IVA aplicable es del 0 %» sin acotar. El
+prompt no se ha tocado; lo que cambió es la reescritura de la pregunta, y con ella
+el contexto que llega al generador. Es el fallo que peor sienta de los cinco,
+porque no es puntuación: es dar un dato que induce a error.
+
 Con matices, que importan más que el número:
 
 - **El prompt se escribió mirando estos mismos fallos**, así que el 0,85 está
@@ -145,11 +183,17 @@ Con matices, que importan más que el número:
   Lo que sí prueban es que soltar la mano en la abstención no hizo inventar nada
   — 2 trampas nuevas de 2, **6 de 6** contando las de siempre. Ese era el riesgo
   real de tocar el prompt.
-- **`iva-acotado` queda a medias.** Ahora acota el supuesto, pero sigue sin decir
-  hasta cuándo estuvo vigente (31/10/2020), que es lo que pide la regla.
+- **`iva-acotado` volvió a romperse, y no acota nada.** Cuando se midió el prompt
+  v3 llegaba a acotar el supuesto sin decir hasta cuándo estuvo vigente. Medido de
+  nuevo el 14/08/2026, responde «el tipo de IVA aplicable es del 0 %» a secas, tres
+  veces de tres. **No es culpa de la recuperación**: los tres fragmentos que recibe
+  son los correctos —el primero lleva «COVID-19» en el propio título— y salen
+  idénticos con reescritura y sin ella. Es la regla 3 del prompt, que con
+  `gpt-oss-20b` no está sujetando. Sigue contado como fallo en el acierto de 0,80.
 
-Los 3 fallos que quedan: 2 son de recuperación (`teletrabajo-volver`,
-`teletrabajo-fichar`) y el tercero, `despido-objetivo`, es de ventana — el
+Los 4 fallos que quedan: 2 son de recuperación (`teletrabajo-volver`,
+`teletrabajo-fichar`), `iva-acotado` es el de arriba, y `despido-objetivo` es de
+ventana — el
 artículo 53 ocupa 5.481 caracteres y el recorte de 2.500 se centra en el trozo
 que casó, dejando fuera «veinte días de salario por año de servicio». Mandar
 además la cabecera del artículo lo arregla y sube el acierto a 0,90, pero cuesta
@@ -293,7 +337,7 @@ Despliegue en producción con systemd y túnel de Cloudflare:
 | `RAG_TOP_K` | `3` | fragmentos recuperados |
 | `RAG_MAX_CHARS` | `2500` | tope del artículo que se manda al modelo |
 | `RAG_LLM` | `openai/gpt-oss-20b` | modelo que redacta la respuesta |
-| `RAG_LLM_QUERY` | `llama-3.1-8b-instant` | modelo que reescribe la pregunta |
+| `RAG_LLM_QUERY` | `qwen/qwen3.6-27b` | modelo que reescribe la pregunta |
 | `RAG_LLM_FALLBACK` | `gemini-3.5-flash-lite` | respaldo si Groq agota la cuota |
 | `RAG_CHUNK` / `RAG_OVERLAP` | `1200` / `150` | tamaño y solape del troceado |
 | `RAG_CACHE_DIR` | `~/.cache/fastembed` | dónde se guardan los modelos ONNX |

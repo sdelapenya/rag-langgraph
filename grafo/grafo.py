@@ -35,7 +35,6 @@ from langgraph.graph import END, START, StateGraph
 # duplicar la única parte que ya está probada en producción.
 from rag import (  # noqa: E402
     MODEL_LLM,
-    MODEL_REESCRITURA,
     TOP_K,
     _generar,
     _load_env_key,
@@ -48,10 +47,18 @@ from store import DEFAULT_MODE, Index  # noqa: E402
 
 NO_SE = "No encuentro esa información en los documentos."
 
-# Modelo juez: el mismo pequeño que reescribe la pregunta. Juzgar si un texto
-# contiene un dato es tarea de clasificación, no de redacción; gpt-oss-20b aquí
-# costaría lo mismo que responder y quitaría todo el sentido al filtro.
-MODEL_JUEZ = os.getenv("RAG_LLM_JUEZ", MODEL_REESCRITURA)
+# Modelo juez: una llamada barata. Juzgar si un texto contiene un dato es tarea
+# de clasificación, no de redacción; gpt-oss-20b aquí costaría lo mismo que
+# responder y quitaría todo el sentido al filtro.
+#
+# Va fijo a propósito, no heredado de MODEL_REESCRITURA. Lo estuvo, y el 14/08/2026
+# el RAG se pasó a un modelo que razona (qwen3.6-27b, con reasoning_effort="none"
+# en su llamada): el juez habría heredado el modelo pero no el ajuste, con
+# max_tokens=60 habría devuelto el bloque de razonamiento, y como ante un
+# veredicto raro se tira hacia adelante, habría dejado de abstenerse SIEMPRE sin
+# fallar ni una vez. Un acoplamiento así no se ve en los tests: se ve en la
+# métrica, tarde.
+MODEL_JUEZ = os.getenv("RAG_LLM_JUEZ", "llama-3.3-70b-versatile")
 
 # Suelo de similitud coseno: por debajo se abstiene sin consultar al juez.
 #
