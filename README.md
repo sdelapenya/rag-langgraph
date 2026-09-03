@@ -46,7 +46,7 @@ algo es lo otro:
 ```
 pregunta del usuario
    │
-   ├─► reescritura al registro legal        (qwen3.6-27b · ~240 ms)
+   ├─► reescritura al registro legal        (qwen3.8-27b · ~240 ms)
    │
    ├─► búsqueda semántica sobre 575 fragmentos
    │      embeddings multilingual-e5-large, ONNX en CPU (~95 ms)
@@ -106,8 +106,9 @@ mismo índice, modo y `k`, cuatro pasadas de reescritura cada uno:
 |---|---|---|
 | `llama-3.1-8b-instant` (retirado el 16/08) | 0,90 | 0,733 |
 | `llama-3.3-70b-versatile` | 0,85 / 0,85 / 0,80 / 0,85 | 0,708 |
-| **`qwen/qwen3.6-27b` + `reasoning_effort=none`** (el que se usa) | **0,90** ×4 | **0,775** |
+| `qwen/qwen3.6-27b` + `reasoning_effort=none` (retirado el 14/09) | 0,90 ×4 | 0,775 |
 | `openai/gpt-oss-20b` + `reasoning_effort=low` | 0,80 | 0,642 |
+| **`qwen/qwen3.8-27b` + `reasoning_effort=none`** (el que se usa) | **0,90** ×3 | **0,85** |
 
 Qwen no solo recupera el recall: mejora el MRR por encima del modelo retirado y
 da las cuatro pasadas idénticas, mientras que el 70B oscilaba. **Llama 3.3 70B
@@ -129,6 +130,16 @@ artículo 53 no cabe en `RAG_MAX_CHARS` y la cuantía queda fuera del recorte). 
 el modelo retirado esa pregunta acertaba porque su reescritura hacía casar por
 casualidad el trozo que llevaba el dato, no porque el sistema lo resolviera.
 Repetida tres veces con Qwen falla las tres, así que es el suelo real, no ruido.
+
+**El 01/09/2026 Groq anunció el fin de `qwen3.6-27b`** (decommission el
+14/09/2026, con auto-routing a `qwen3.8-27b` mientras tanto). Medido el
+relevo con el mismo procedimiento, 3 pasadas sobre el índice e5 real (**ojo**:
+medir esto sobre el índice `minilm` por defecto de `evaluate.py` sin pasar
+`--model e5` da recall@3 0,85 y parece una regresión — es el índice
+equivocado, no el modelo). `qwen3.8-27b` iguala el recall y sube el MRR de
+0,775 a 0,85, con las tres pasadas idénticas. Las dos preguntas de teletrabajo
+que fallan (`teletrabajo-volver`, `teletrabajo-fichar`) ya fallaban con
+`qwen3.6-27b`; no las causa el cambio de modelo.
 
 **Bajar de `k=5` a `k=3` no costó recuperación**: recall@5 0,895 sobre las 19
 preguntas de aquella tanda, recall@3 0,90 sobre las 20 de ahora, mismo MRR. El
@@ -337,7 +348,7 @@ Despliegue en producción con systemd y túnel de Cloudflare:
 | `RAG_TOP_K` | `3` | fragmentos recuperados |
 | `RAG_MAX_CHARS` | `2500` | tope del artículo que se manda al modelo |
 | `RAG_LLM` | `openai/gpt-oss-20b` | modelo que redacta la respuesta |
-| `RAG_LLM_QUERY` | `qwen/qwen3.6-27b` | modelo que reescribe la pregunta |
+| `RAG_LLM_QUERY` | `qwen/qwen3.8-27b` | modelo que reescribe la pregunta |
 | `RAG_LLM_FALLBACK` | `gemini-3.5-flash-lite` | respaldo si Groq agota la cuota |
 | `RAG_CHUNK` / `RAG_OVERLAP` | `1200` / `150` | tamaño y solape del troceado |
 | `RAG_CACHE_DIR` | `~/.cache/fastembed` | dónde se guardan los modelos ONNX |

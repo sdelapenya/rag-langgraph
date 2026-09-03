@@ -138,7 +138,8 @@ sostiene igual porque lo que se ahorra son los tokens de redactar.
 
 **El modelo del juez va fijo, no heredado del que reescribe la pregunta** — y
 eso es una cicatriz, no una preferencia. Lo heredaba, y el 14/08/2026 el RAG se
-pasó a `qwen3.6-27b`, que razona y necesita `reasoning_effort="none"` en su
+pasó a `qwen3.6-27b` (y el 03/09/2026 a `qwen3.8-27b`, cuando Groq retiró el
+anterior), que razona y necesita `reasoning_effort="none"` en su
 llamada. El juez habría heredado el modelo pero no el ajuste: con `max_tokens=60`
 habría devuelto el bloque de razonamiento en vez de un veredicto y, como ante un
 veredicto raro este grafo tira hacia adelante a propósito, **habría dejado de

@@ -52,8 +52,9 @@ NO_SE = "No encuentro esa información en los documentos."
 # responder y quitaría todo el sentido al filtro.
 #
 # Va fijo a propósito, no heredado de MODEL_REESCRITURA. Lo estuvo, y el 14/08/2026
-# el RAG se pasó a un modelo que razona (qwen3.6-27b, con reasoning_effort="none"
-# en su llamada): el juez habría heredado el modelo pero no el ajuste, con
+# el RAG se pasó a un modelo que razona (qwen3.6-27b, luego qwen3.8-27b desde
+# 03/09/2026, con reasoning_effort="none" en su llamada): el juez habría
+# heredado el modelo pero no el ajuste, con
 # max_tokens=60 habría devuelto el bloque de razonamiento, y como ante un
 # veredicto raro se tira hacia adelante, habría dejado de abstenerse SIEMPRE sin
 # fallar ni una vez. Un acoplamiento así no se ve en los tests: se ve en la

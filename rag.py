@@ -42,15 +42,21 @@ MODEL_LLM = os.getenv("RAG_LLM", "openai/gpt-oss-20b")
 # Medido con evaluate.py (4 pasadas, mismo índice, modo y k):
 #   llama-3.1-8b-instant  recall@3 0,90  MRR 0,742   (retirado)
 #   llama-3.3-70b         recall@3 0,85  MRR 0,708
-#   qwen3.6-27b + none    recall@3 0,90  MRR 0,775   <- el que se usa
+#   qwen3.6-27b + none    recall@3 0,90  MRR 0,775   (retirado)
 #
 # El 70B perdía recall por una razón concreta: se tragaba los ejemplos del
 # prompt de abajo y se los pegaba a preguntas que no iban de eso ("¿a qué edad
 # se puede trabajar?" acababa preguntando por el registro de jornada). Retocar
 # el prompt para evitarlo arreglaba unas preguntas y rompía otras; con Qwen el
-# prompt original ya sale limpio, va más rápido (0,24 s de mediana) y las cuatro
-# pasadas dieron lo mismo, frente al 0,85/0,85/0,80/0,85 del 70B.
-MODEL_REESCRITURA = os.getenv("RAG_LLM_QUERY", "qwen/qwen3.6-27b")
+# prompt original ya sale limpio y va más rápido (0,24 s de mediana).
+#
+# Groq deprecó qwen3.6-27b el 01/09/2026 (decommission 14/09/2026, con
+# auto-routing a qwen3.8-27b mientras tanto). Medido el relevo con el mismo
+# procedimiento, 3 pasadas sobre el índice e5 (el que usa la demo; ojo con
+# medir esto en el índice minilm por defecto, da cifras peores y no son las
+# reales):
+#   qwen3.8-27b + none     recall@3 0,90 ×3  MRR 0,85   <- el que se usa
+MODEL_REESCRITURA = os.getenv("RAG_LLM_QUERY", "qwen/qwen3.8-27b")
 
 # Solo se manda si el modelo de reescritura razona; para el resto, la API
 # rechaza el parámetro. Qwen admite "none", que lo desactiva del todo; la
