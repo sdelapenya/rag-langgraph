@@ -55,51 +55,63 @@ similitudes y qué modelo respondió:
   ruta        recuperar -> evaluar -> abstenerse
   reescritura ¿Cuál es la tasa general del Impuesto sobre el Valor Añadido en España?
   similitudes [0.8353, 0.8158, 0.8089]  (umbral 0.8)
-  modelos     juez=llama-3.3-70b-versatile  respuesta=-
+  modelos     juez=qwen/qwen3.8-27b  respuesta=-
   ahorrado    una llamada a openai/gpt-oss-20b
 ```
 
 ## Resultados
 
 Las mismas 24 preguntas del RAG original (20 con respuesta en el corpus, 4 de
-materias que no regula), misma configuración: e5, semantic, k=3. Ambas columnas
-son de tandas del **12/08** con el generador a **temperatura 0** y el prompt
-nuevo (el grafo importa `ask()` del RAG, así que comparte prompt: cuando aquél
-subió de 0,70 a 0,85, este subió con él).
+materias que no regula), misma configuración: e5, semantic, k=3, generador a
+**temperatura 0**.
+
+> ⚠️ **La columna del grafo es del 03/09/2026, recién cambiado el juez** (una
+> tanda, sin respaldo de Gemini). La del RAG original es de la misma fecha. Los
+> números anteriores de este README eran del 12/08 **con un juez que ya no
+> existe** (ver más abajo): no se pueden comparar de frente con estos.
 
 | | RAG original | Este grafo |
 |--|--|--|
-| acierto de respuesta | 0,85 | 0,80 |
+| acierto de respuesta | 0,80 | 0,70 |
 | abstención correcta (4 preguntas de fuera) | 4/4 | **4/4** |
-| llamadas al modelo grande | 24/24 | **20/24** |
-| abstenciones provocadas por el juez sobre preguntas buenas | — | **0** |
+| llamadas al modelo grande | 24/24 | **16/24** |
+| abstenciones provocadas por el juez sobre preguntas buenas | — | **4** |
 
 Lo que hay que leer en esa tabla:
 
-- **Las 4 llamadas ahorradas son las 4 preguntas sin respuesta.** El grafo las
-  corta en `evaluar`, con un modelo pequeño, en vez de mandarle al grande un
-  contexto que no sirve. Con un corpus mayor y usuarios reales, esa proporción
-  es lo que se factura.
-- **Cero abstenciones indebidas**: el juez no cortó ni una sola de las 20
-  preguntas que sí tenían respuesta. Era el riesgo de meter un filtro delante y
-  es la columna que más importa.
-- **La diferencia de acierto no cuenta, ni antes a favor ni ahora en contra.** El
-  grafo no toca la generación: son las mismas fuentes y el mismo prompt. En
-  julio iba 5 puntos por encima (0,75 frente a 0,70) y hoy va 5 por debajo (0,80
-  frente a 0,85), y en los dos casos es **una sola pregunta de 20**. Hoy es
-  `iva-acotado`: el RAG contesta «0 % **para los bienes necesarios para combatir
-  los efectos del COVID-19**» y el grafo, con el mismo contexto y el mismo
-  prompt, «el tipo del IVA aplicable en ese caso es del 0 %» — dice «en ese caso»
-  pero no nombra el supuesto, y el corrector busca la palabra. Groq sirve
-  `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el mismo texto siempre.
-  Con esta muestra, la diferencia no es señal.
-- Las 2 preguntas que aún acaban en «no lo encuentro» (`teletrabajo-volver`,
-  `teletrabajo-fichar`) las corta **el modelo grande al redactar**, no el juez —
-  eran 4 antes del prompt nuevo: es el comportamiento que ya
-  tenía el RAG original. Por eso la evaluación separa `cortadas_por_el_juez` de
-  `abstenidas_al_generar`; sumarlas escondería de quién es la culpa.
+- **El juez ahorra ahora 8 llamadas de 24, no 4** — y ese número tiene truco: 4
+  son las preguntas sin respuesta (lo que se buscaba) y las otras 4 son cortes
+  sobre preguntas que sí tienen respuesta en el corpus.
+- **Cuatro abstenciones indebidas, y hay que mirarlas de una en una** porque no
+  son lo mismo:
+  - `despido-objetivo`, `teletrabajo-volver` y `teletrabajo-fichar`: el juez
+    dice que la cuantía o el asunto **no están en los fragmentos recuperados**,
+    y tiene razón — son los fallos de ventana y de recuperación que ya están
+    descritos en el README del RAG. En la tanda del 12/08 estas tres acababan
+    igualmente en «no lo encuentro», solo que **después** de pagar la llamada al
+    modelo grande. Mismo resultado, más barato.
+  - `teletrabajo-control` es **un corte malo de verdad**: el artículo 22
+    («Facultades de control empresarial») y el 17 están entre los fragmentos y
+    el juez contesta «no regulan la vigilancia de la actividad». Es una pregunta
+    que antes se respondía bien y ahora se pierde. No está maquillado: es el
+    precio del juez nuevo.
+- **El juez anterior no cortaba nada** (`cortadas_por_el_juez: []` el 12/08), y
+  eso hacía muy fácil presumir de «cero abstenciones indebidas». Un filtro que
+  no filtra nunca no demuestra que sea prudente, solo que no está haciendo su
+  trabajo. El de ahora sí corta, acierta en 3 de sus 4 cortes y falla 1.
+- **De los 10 puntos de acierto que separan las dos columnas, solo 5 son del
+  juez.** El grafo no toca la generación: son las mismas fuentes y el mismo
+  prompt. `teletrabajo-control` sí es cosa del juez (lo corta). La otra pregunta
+  es `teletrabajo-regular`, que el juez **deja pasar** con un veredicto correcto
+  y a la que el generador contesta «no lo encuentro» aun teniendo el artículo 1
+  delante; el RAG original, en la misma tanda y con los mismos fragmentos, la
+  acierta. Groq sirve `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el
+  mismo texto siempre: con una tanda y una pregunta, eso no es señal.
+  **Conviene repetir la medición otro día**, con la cuota diaria entera.
+- Por eso la evaluación separa `cortadas_por_el_juez` de `abstenidas_al_generar`;
+  sumarlas escondería de quién es la culpa.
 
-Recall@3 (0,90) y MRR (0,74) no se recalculan: la recuperación es literalmente
+Recall@3 (0,90) y MRR (0,85) no se recalculan: la recuperación es literalmente
 la misma función, así que son los números de `evaluate.py` sin tocar.
 
 ### El juez, en su segunda versión
@@ -117,6 +129,12 @@ calculó en `recuperar` y no cuesta nada. Con eso, y con un prompt que exige
 literalidad solo donde debe (una cifra, un importe, un plazo que no aparece),
 las 5 volvieron a pasar sin que se colara ninguna de las 4 de fuera.
 
+El prompt no ha cambiado desde entonces, pero **el modelo que lo lee sí** (03/09,
+ver arriba), y con Qwen una de aquellas 5 —`teletrabajo-control`— vuelve a
+caer. Se probó a añadirle al prompt una regla general para las preguntas de
+sí/no: **no la arregla**, así que la regla no está puesta. Un prompt no es una
+propiedad del sistema: es una propiedad del par prompt-modelo.
+
 ## Decisiones
 
 **Entorno virtual y carpeta aparte.** El RAG del directorio padre sirve un proceso en
@@ -126,7 +144,8 @@ transitiva. Aquí hay un `.venv` propio con las mismas versiones de las librerí
 compartidas; el código y el índice del RAG se leen de su sitio, sin copiarlos ni
 modificarlos. El puente son diez líneas: [`puente.py`](puente.py).
 
-**El juez es una llamada barata** (`llama-3.3-70b-versatile`). Decidir si un
+**El juez es una llamada barata** (`qwen/qwen3.8-27b` con
+`reasoning_effort="none"`). Decidir si un
 texto contiene un dato es clasificar, no redactar: la salida son un par de
 tokens frente a una respuesta entera, y sale de una cuota distinta a la del
 generador. Si el filtro costara lo mismo que la respuesta, no filtraría nada:
@@ -135,6 +154,15 @@ solo añadiría latencia.
 Hasta el 16/08/2026 este papel lo hacía `llama-3.1-8b-instant`, que Groq retiró.
 Era literalmente un modelo pequeño; el relevo no lo es, pero el argumento se
 sostiene igual porque lo que se ahorra son los tokens de redactar.
+
+**El 03/09/2026 hubo que cambiarlo otra vez, y el fallo es la lección**: Groq
+retiró también `llama-3.3-70b-versatile` y aquí nadie se enteró, porque el 404
+que devolvía la API no lo captura `_generar` —que solo reintenta los 429— y
+reventaba el grafo entero en cualquier pregunta que pasara del umbral. Un
+modelo cableado en un default es una dependencia externa con fecha de
+caducidad y sin aviso. El relevo es Qwen porque del catálogo que queda gpt-oss
+es el que redacta, y usarlo de juez gastaría justo la cuota que este filtro
+existe para ahorrar.
 
 **El modelo del juez va fijo, no heredado del que reescribe la pregunta** — y
 eso es una cicatriz, no una preferencia. Lo heredaba, y el 14/08/2026 el RAG se

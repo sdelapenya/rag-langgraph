@@ -59,7 +59,24 @@ NO_SE = "No encuentro esa información en los documentos."
 # veredicto raro se tira hacia adelante, habría dejado de abstenerse SIEMPRE sin
 # fallar ni una vez. Un acoplamiento así no se ve en los tests: se ve en la
 # métrica, tarde.
-MODEL_JUEZ = os.getenv("RAG_LLM_JUEZ", "llama-3.3-70b-versatile")
+#
+# El 03/09/2026 el juez llevaba roto un tiempo sin que nadie lo notara: Groq
+# retiró `llama-3.3-70b-versatile` y la llamada devolvía 404, que `_generar`
+# no captura (solo reintenta los 429), así que el grafo entero reventaba en
+# cualquier pregunta que pasara del umbral. Del catálogo que queda, gpt-oss es
+# el modelo que redacta —usarlo aquí gastaría la misma cuota que se quiere
+# ahorrar— así que el juez pasa a Qwen. Es el mismo modelo que reescribe, pero
+# el ajuste va explícito abajo, no heredado: esa es justo la trampa de arriba.
+MODEL_JUEZ = os.getenv("RAG_LLM_JUEZ", "qwen/qwen3.8-27b")
+
+# Mismo criterio que en rag.py, calculado aquí a propósito para que cambiar
+# RAG_LLM_JUEZ no arrastre el ajuste del reescritor.
+if MODEL_JUEZ.startswith("qwen/"):
+    JUEZ_RAZONA = "none"
+elif MODEL_JUEZ.startswith("openai/gpt-oss"):
+    JUEZ_RAZONA = "low"
+else:
+    JUEZ_RAZONA = None
 
 # Suelo de similitud coseno: por debajo se abstiene sin consultar al juez.
 #
@@ -193,7 +210,7 @@ def evaluar(estado: Estado) -> Estado:
         _api_key(), MODEL_JUEZ,
         JUEZ.format(context=build_context(fuentes)),
         PREGUNTA_JUEZ.format(pregunta=estado["pregunta"], reescritura=reescritura),
-        temperature=0.0, max_tokens=60,
+        temperature=0.0, max_tokens=60, reasoning_effort=JUEZ_RAZONA,
     )
     linea = veredicto.strip().lstrip("*# ").replace("Í", "I")
     # ante una respuesta rara del juez se tira hacia adelante: preferimos gastar

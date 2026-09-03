@@ -1,12 +1,10 @@
-/home/sergio/lab/rag/store.py:150: UserWarning: The model intfloat/multilingual-e5-large now uses mean pooling instead of CLS embedding. In order to preserve the previous behaviour, consider either pinning fastembed version to 0.5.1 or using `add_custom_model` functionality.
-  return TextEmbedding(
   recuperar -> evaluar -> generar    horas-extra
   recuperar -> evaluar -> generar    jornada-maxima
   recuperar -> evaluar -> generar    vacaciones
   recuperar -> evaluar -> generar    descanso-entre-jornadas
   recuperar -> evaluar -> generar    descanso-semanal
   recuperar -> evaluar -> generar    despido-improcedente
-  recuperar -> evaluar -> generar    despido-objetivo
+  recuperar -> evaluar -> abstenerse despido-objetivo
   recuperar -> evaluar -> generar    edad-minima
   recuperar -> evaluar -> generar    lactancia
   recuperar -> evaluar -> generar    trabajo-nocturno
@@ -15,10 +13,10 @@
   recuperar -> evaluar -> generar    bajar-sueldo
   recuperar -> evaluar -> generar    teletrabajo-gastos
   recuperar -> evaluar -> generar    teletrabajo-regular
-  recuperar -> evaluar -> generar    teletrabajo-volver
+  recuperar -> evaluar -> abstenerse teletrabajo-volver
   recuperar -> evaluar -> generar    teletrabajo-acuerdo
-  recuperar -> evaluar -> generar    teletrabajo-fichar
-  recuperar -> evaluar -> generar    teletrabajo-control
+  recuperar -> evaluar -> abstenerse teletrabajo-fichar
+  recuperar -> evaluar -> abstenerse teletrabajo-control
   recuperar -> evaluar -> abstenerse fuera-iva
   recuperar -> evaluar -> abstenerse fuera-smi-importe
   recuperar -> evaluar -> generar    iva-acotado
@@ -27,11 +25,11 @@
 
     n_en_corpus              20
     n_fuera_corpus           4
-    acierto_respuesta        0.8
+    acierto_respuesta        0.7
     abstencion_correcta      1.0
-    llamadas_modelo_grande   20/24
-    cortadas_por_el_juez     []
-    abstenidas_al_generar    ['teletrabajo-volver', 'teletrabajo-fichar']
-    segundos                 542.2
+    llamadas_modelo_grande   16/24
+    cortadas_por_el_juez     ['despido-objetivo', 'teletrabajo-volver', 'teletrabajo-fichar', 'teletrabajo-control']
+    abstenidas_al_generar    ['teletrabajo-regular']
+    segundos                 238.7
 
-  Detalle en eval-grafo.json
+  Detalle en /tmp/claude-1000/-home-sergio/c25c6dc3-27e6-460c-99c2-7045cb23ca8e/scratchpad/eval-grafo-nuevo.json

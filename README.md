@@ -213,9 +213,10 @@ un **20 % más de contexto en todas las consultas** para ganar **1 pregunta de
 
 Con `llama-3.3-70b` los casos del generador salían bien en una prueba a mano
 —**tanda no conservada, así que ese número no está en el repo y no lo doy**—,
-pero gasta la cuota diaria de la cuenta mucho antes, así que la demo pública va
-con el modelo pequeño. Es el intercambio real: acierto a cambio de que la demo
-siga en pie por la tarde.
+pero gastaba la cuota diaria de la cuenta mucho antes, así que la demo pública
+va con el modelo pequeño. Era el intercambio real: acierto a cambio de que la
+demo siga en pie por la tarde. (Discusión ya histórica: Groq retiró ese modelo
+el 03/09/2026.)
 
 Reproducible:
 

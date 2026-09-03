@@ -30,8 +30,9 @@ log = logging.getLogger(__name__)
 
 # gpt-oss-20b responde en ~0,7 s. gpt-oss-120b acierta algo más pero es un
 # modelo de razonamiento y tardaba entre 6 y 25 s con este contexto, demasiado
-# para una demo en la que alguien escribe y espera; llama-3.3-70b va igual de
-# rápido y acierta un poco más, pero agota antes la cuota diaria de la cuenta.
+# para una demo en la que alguien escribe y espera; llama-3.3-70b iba igual de
+# rápido y acertaba un poco más, pero agotaba antes la cuota diaria de la
+# cuenta — y desde el 03/09/2026 ya da igual: Groq lo ha retirado.
 MODEL_LLM = os.getenv("RAG_LLM", "openai/gpt-oss-20b")
 
 # La reescritura iba con llama-3.1-8b-instant hasta que Groq lo retiró el
