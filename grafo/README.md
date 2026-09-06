@@ -65,10 +65,13 @@ Las mismas 24 preguntas del RAG original (20 con respuesta en el corpus, 4 de
 materias que no regula), misma configuración: e5, semantic, k=3, generador a
 **temperatura 0**.
 
-> ⚠️ **La columna del grafo es del 03/09/2026, recién cambiado el juez** (una
-> tanda, sin respaldo de Gemini). La del RAG original es de la misma fecha. Los
-> números anteriores de este README eran del 12/08 **con un juez que ya no
-> existe** (ver más abajo): no se pueden comparar de frente con estos.
+> ⚠️ **La columna del grafo es del 03/09/2026, recién cambiado el juez**, y
+> está **replicada el 06/09/2026**: dos tandas independientes, ambas sin
+> respaldo de Gemini, con la misma ruta y el mismo acierto en las 24 preguntas
+> una por una (solo cambian la redacción de 8 respuestas y el cronómetro). La
+> columna del RAG original es del 03/09. Los números anteriores de este README
+> eran del 12/08 **con un juez que ya no existe** (ver más abajo): no se pueden
+> comparar de frente con estos.
 
 | | RAG original | Este grafo |
 |--|--|--|
@@ -105,9 +108,10 @@ Lo que hay que leer en esa tabla:
   es `teletrabajo-regular`, que el juez **deja pasar** con un veredicto correcto
   y a la que el generador contesta «no lo encuentro» aun teniendo el artículo 1
   delante; el RAG original, en la misma tanda y con los mismos fragmentos, la
-  acierta. Groq sirve `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el
-  mismo texto siempre: con una tanda y una pregunta, eso no es señal.
-  **Conviene repetir la medición otro día**, con la cuota diaria entera.
+  acierta. La sospecha inicial fue que era ruido de muestreo —Groq sirve
+  `gpt-oss-20b` en lotes y ni a temperatura 0 devuelve el mismo texto siempre—,
+  pero **la segunda tanda del 06/09 la vuelve a perder exactamente igual**: es
+  un fallo reproducible del generador, no una mala tirada.
 - Por eso la evaluación separa `cortadas_por_el_juez` de `abstenidas_al_generar`;
   sumarlas escondería de quién es la culpa.
 
